@@ -1,0 +1,16 @@
+; xVNCviewer window for Ubuntu client <-> Ubuntu server (TightVNC both).
+; Below string: TightVNC: userName's X desktop (hostName:1)
+; Matches regular expression: ^TightVNC: [a-zA-Z0-9]+[']{1}s X desktop [(]{1}[a-zA-Z0-9:]+[)]{1}$
+
+( if
+    ( begin
+        ( matches (window_class ) "^TightVNC: [a-zA-Z0-9]+[']{1}s X desktop [(]{1}[a-zA-Z0-9:]+[)]{1}$" )
+        ( matches (application_name ) "^TightVNC: [a-zA-Z0-9]+[']{1}s X desktop [(]{1}[a-zA-Z0-9:]+[)]{1}$" )
+        ( matches (window_name) "^TightVNC: [a-zA-Z0-9]+[']{1}s X desktop [(]{1}[a-zA-Z0-9:]+[)]{1}$" )
+    )
+    ( begin
+        ( undecorate )
+        ( geometry "+2+2" )
+        ( println "match" )
+    )
+)

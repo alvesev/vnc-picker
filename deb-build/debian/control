@@ -1,0 +1,15 @@
+Source: vnc-picker
+Section: main
+Priority: standart
+Maintainer: Alex Vesev <alex.vesev@gmail.com>
+Build-Depends: debhelper (>= 8.0.0)
+Standards-Version: 3.9.3
+Homepage: https://github.com/alvesev
+
+Package: vnc-picker
+Architecture: all
+Depends: bash, dialog, vncviewer, openssh-client
+Recommends: devilspie, tightvncserver, openssh-server
+Description: An utility to assist in connecting to a VNC server over SSH tunnel.
+ An utility to assist in connecting to a VNC server over SSH tunnel.
+ This utility was inspired by russian publication: Graphical terminal server - secured remote desktop access with session keeping in case of disconnect - http://help.ubuntu.ru/wiki/tightvnc-ssh-terminal-server (Графический сервер терминалов - защищённый удалённый вход, без потери информации в случае последующего разрыва)

@@ -1,0 +1,33 @@
+
+This program intended to assist in connecting to a VNC server over
+SSH tunnel.
+
+This utility was inspired by russian publication: Graphical terminal
+server - secured remote desktop access with session keeping in case of
+disconnect - http://help.ubuntu.ru/wiki/tightvnc-ssh-terminal-server
+(Графический сервер терминалов - защищённый удалённый вход, без потери
+информации в случае последующего разрыва).
+
+
+#
+#   Copyright 2011-2012 Alex Vesev
+#
+#   This application name is VNC-Picker, which may be wraped as
+#   "VNCP".
+#
+#   This file is a part of VNC-Picker.
+#
+#   This application is free software: you can redistribute it and/or
+#   modify it under the terms of the GNU General Public License as
+#   published by the Free Software Foundation, either version 3 of the
+#   License, or (at your option) any later version.
+#
+#   This application is distributed in the hope that it will be useful,
+#   but WITHOUT ANY WARRANTY; without even the implied warranty of
+#   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#   GNU General Public License for more details.
+#
+#   You should have received a copy of the GNU General Public License
+#   along with this script. If not, see <http://www.gnu.org/licenses/>.
+#
+##

@@ -1,0 +1,15 @@
+; xVNCviewer window for Ubuntu client <-> Fedora server (TigerVNC).
+; Below string: TightVNC: some-host.domain:1 (user)
+; Matches regular expression: ^TightVNC: [a-zA-Z0-9:.'\-]+ [(]{1}[a-zA-Z0-9:.'\-]+[)]{1}$
+
+( if
+    ( begin
+        ( matches ( application_name ) "^TightVNC: [a-zA-Z0-9:.'\-]+ [(]{1}[a-zA-Z0-9:.'\-]+[)]{1}$" )
+        ( matches ( window_name ) "^TightVNC: [a-zA-Z0-9:.'\-]+ [(]{1}[a-zA-Z0-9:.'\-]+[)]{1}$" )
+    )
+    ( begin
+        ( undecorate )
+        ( geometry "+6+4" )
+        ( println "match" )
+    )
+)

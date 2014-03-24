@@ -1,0 +1,931 @@
+#!/bin/bash
+
+#
+#   Copyright 2011-2012 Alex Vesev
+#
+#   This application name is VNC-Picker, which may be wraped as
+#   "VNCP".
+#
+#   This file is a part of VNC-Picker.
+#
+#   This application is free software: you can redistribute it and/or
+#   modify it under the terms of the GNU General Public License as
+#   published by the Free Software Foundation, either version 3 of the
+#   License, or (at your option) any later version.
+#
+#   This application is distributed in the hope that it will be useful,
+#   but WITHOUT ANY WARRANTY; without even the implied warranty of
+#   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#   GNU General Public License for more details.
+#
+#   You should have received a copy of the GNU General Public License
+#   along with this script. If not, see <http://www.gnu.org/licenses/>.
+#
+##
+
+#
+#  Pick up VNC connections.
+#
+##
+
+
+
+
+# #
+ #
+#
+
+shopt -s extglob
+PS4="CMD:${0}:${LINENO}: "
+
+# #
+ #
+#
+
+declare -ri vncNodesParamItemsQuantity="10"
+declare -ra vncNodes=(\
+"user-name" "host-name" "22" "localhost" "12345" "5901" ":1" "800x600" "86" "${HOME}/.vnc/passwd.hostname"
+"user-name" "host-name" "22" "localhost" "12345" "5901" ":1" "800x600" "86" "${HOME}/.vnc/passwd.hostname"
+)
+
+# Objects used to store in _array_ information sufficient to acces VNC node.
+declare -a  sshNameLst=""
+declare -a  vncHostLst=""
+declare -a  sshPortNumberLst=""
+declare -a  tunHostLst=""
+declare -a  localTunPortNumberLst="" # tunnel's local port
+declare -a  vncHostPortNumberLst="" # tunnel's remote port
+declare -a  dispIdLst="" # Ignored. Is evaluated at run time. Partially fixed.
+declare -a  screenSzLst=""
+declare -a  screenDpi=""
+declare -a  passFileLst=""
+
+declare    selectedSingleNodeIdString=""
+declare    selectedNodesNumbersList=""
+declare -a selectedActions=""
+
+# XXX - This code is dependent and specific to third party technologies.
+declare -r  vncServerExecutable="vncserver"
+
+declare -ri noErrorDetected=0 # Zero is OK
+declare -ri errorMisc=1
+declare -ri undefinedErrorState=253
+declare -ri errorEpic=254
+declare -ri errorState=${noErrorDetected}
+
+declare -ri codeSuccess=0
+declare -ri codeFailure=1
+
+declare -r  backDialogTitle="VNC picker - $( basename "${0}" )"
+
+declare -ra knownNamesForActions=(\
+                "Shutdown server" \
+                "Close tunnel" \
+                "Launch tunnel" \
+                "Launch server" \
+                "Connect to server" \
+                )
+
+declare -i  uniqueNameSerialNumber="$RANDOM"
+declare -r  markerGoBackRequested="goBackRequested"
+
+function sortActionsOrder {
+    # In fact it is already sorted using order in listbox of Dialog utility.
+
+    # TODO - create separated order of actions in UI dialog and their actual launch order. Connect at list top, but shutdown before server launch, launch before connect and similar.
+
+    local -r multiLineList="${1}"
+
+    local    sortedMultiLineList=""
+    local    singleName=""
+    local    singleKnownName=""
+
+    for singleKnownName in "${knownNamesForActions[@]}" ; do
+        while read singleName ; do
+            [ "${singleName}" == "${singleKnownName}" ] \
+                && sortedMultiLineList="${sortedMultiLineList}${singleName}"$'\n'
+        done <<< "${multiLineList}"
+    done
+
+    echo -n "${sortedMultiLineList}"
+}
+
+function isKnownActionName {
+    local singleName="${1}"
+
+    local singleKnownName=""
+
+    singleName="${singleName/#*([[:space:]])/}" # Strip leading space.
+    singleName="${singleName/%*([[:space:]])/}" # Strip trailing space.
+
+    [ -z "${singleName}" ] \
+        && return ${codeFailure}
+
+    for singleKnownName in "${knownNamesForActions[@]}" ; do
+        [ "${singleName}" == "${singleKnownName}" ] \
+            && [ -n "${singleName}" ] \
+            && return ${codeSuccess}
+    done
+
+    return ${codeFailure}
+}
+
+function splitListToStringsWithActionsNames {
+    local -r unformatedList="${1}"
+
+    local    formatedList=""
+    local    singleWord=""
+    local    buffer=""
+
+    idx=0
+    unset formatedList
+    unset buffer
+    for singleWord in ${unformatedList} ; do
+        buffer="${buffer} ${singleWord}"
+        isKnownActionName "${buffer}" \
+            && formatedList="${formatedList}${buffer:1}"$'\n' \
+            && unset buffer
+    done
+    formatedList="$( sortActionsOrder "${formatedList}" )"
+    echo -n "${formatedList}"
+}
+
+function processAllSelectedNodes {
+    local -r  requestedActionsList="${1}"
+    shift 1
+    local -ra nodesNumbersList=("${@}")
+
+    local     actionToBePerformed=""
+    local     singleNodeNumber=""
+
+    [ -z "${nodesNumbersList}" ] \
+        && return
+
+    for singleNodeNumber in "${nodesNumbersList[@]}" ; do
+        while read actionToBePerformed ; do
+            case "${actionToBePerformed}" in
+            'Shutdown server')
+                vncStop "${singleNodeNumber}"
+            ;;
+            'Close tunnel')
+                sshTunnelShutdown "${singleNodeNumber}"
+            ;;
+            'Launch tunnel')
+                wakeTunnelUp "${singleNodeNumber}"
+            ;;
+            'Launch server')
+                vncStart "${singleNodeNumber}"
+            ;;
+            'Connect to server')
+                vncConnect "${singleNodeNumber}"
+            ;;
+            '')
+                echo "INFORMATION:${0}:${LINENO}: Action is not selected." >&2
+            ;;
+            *)
+                echo "ERROR:${0}:${LINENO}: Unknown action '${actionToBePerformed}'." >&2
+                exit ${errorMisc}
+            ;;
+            esac
+        done <<< "${requestedActionsList}"
+    done
+}
+
+function getDialogListBoxType {
+    local -r selectionMode="${1}"
+
+    # See 'man dialog' on possible list boxes types.
+    local -r dialogOptionRadiolist="radiolist"
+    local -r dialogOptionChecklist="checklist"
+
+    case "${selectionMode}" in
+    SINGLE_SELECT)
+        echo -n "${dialogOptionRadiolist}"
+        return ${codeSuccess}
+    ;;
+    MULTI_SELECT)
+        echo -n "${dialogOptionChecklist}"
+        return ${codeSuccess}
+    ;;
+    *)
+        echo "ERROR:${0}:${LINENO}: Unknown selection mode '${selectionMode}'." >&2
+        exit ${errorMisc}
+    ;;
+    esac
+}
+
+function checkIsExistRegularFile {
+    local targetFile="${1}"
+
+    [ ! -f "${targetFile}" ] \
+        && echo "ERROR:${0}:${LINENO}: Not found file '${targetFile}'." >&2 \
+        && exit ${errorMisc}
+    return ${codeSuccess}
+}
+
+function createTempFile {
+    local fileTmp=""
+
+    fileTmp="$( mktemp )"
+    [ ! -e "${fileTmp}" ] \
+        && echo "ERROR:${0}:${LINENO}: failed to create temporary file." >&2 \
+        && exit ${errorMisc}
+    trap 'rm -f "${fileTmp}"' EXIT
+    echo "${fileTmp}"
+    return ${codeSuccess}
+}
+
+#function createPipeFile {
+    #local filePipe=""
+
+    #filePipe="/tmp/$( getNextUniqueName )"
+    #mkfifo --mode=600 "${filePipe}"
+    #trap 'rm -f "${filePipe}"' EXIT
+    #[ ! -p "${filePipe}" ] \
+        #&& echo "ERROR:${0}:${LINENO}: failed to create fifo file." >&2 \
+        #&& exit ${errorMisc}
+    #echo -n "${filePipe}"
+#}
+
+#function getNextUniqueName {
+    #local fileName=""
+
+    #while : ; do
+        #((uniqueNameStartValue++))
+        #fileName="$$_$uniqueNameStartValue"
+        #[ ! -e "${fileName}" ] \
+            #&& echo "fileName" \
+            #&& return ${codeSuccess}
+    #done
+#}
+
+function loadVNCNodesList {
+    local idx=""
+
+    vncNodesQuantity=0
+    for idx in $( seq 0 ${vncNodesParamItemsQuantity} $(( ${#vncNodes[*]} - 1 )) ) ; do
+
+        sshNameLst[vncNodesQuantity]="${vncNodes[idx]}"
+        vncHostLst[vncNodesQuantity]="${vncNodes[idx+1]}"
+        sshPortNumberLst[vncNodesQuantity]="${vncNodes[idx+2]}"
+        tunHostLst[vncNodesQuantity]="${vncNodes[idx+3]}"
+        localTunPortNumberLst[vncNodesQuantity]="${vncNodes[idx+4]}"
+        vncHostPortNumberLst[vncNodesQuantity]="${vncNodes[idx+5]}"
+        dispIdLst[vncNodesQuantity]="${vncNodes[idx+6]}"
+        screenSzLst[vncNodesQuantity]="${vncNodes[idx+7]}"
+        screenDpi[vncNodesQuantity]="${vncNodes[idx+8]}"
+        passFileLst[vncNodesQuantity]="${vncNodes[idx+9]}"
+
+        ((vncNodesQuantity++))
+
+    done
+
+}
+
+function getBusyScreenIds {
+
+    # A way to figure out already used displays Ids.
+    #   ps aux | grep X
+    #   ls /tmp/.X11-unix/*
+    #   pidof X
+
+    local -r  sshPortNumber="${1:-22}"
+    local -r  accountIdWithHost="${2:-notSpecified@noName}"
+
+    local -r  programAsDisplayIndicator="X"
+
+    local -r  dirWithIndicators="/tmp/.X11-unix"
+    local -r  prefixToStrip="${dirWithIndicators}/X"
+
+    local -i  idx=0
+
+    while read dirTmp ; do
+        displayBusyIds=":${dirTmp##${prefixToStrip}}"
+        echo "${displayBusyIds}"
+    done <<< "$( ssh -p "${sshPortNumber}" "${accountIdWithHost}" "find \"${dirWithIndicators}\" -maxdepth 1 -name \"X*\" 2>/dev/null" )"
+}
+
+function getFreeScreenId {
+    local -r  sshPortNumber="${1:-22}"
+    local -r  accountIdWithHost="${2:-notSpecified@noName}"
+
+    local -a screenAllBusyOnes=("")
+    local -i idx=0
+
+    while read screenBusyId ; do
+        screenAllBusyOnes[idx]="${screenBusyId}"
+    done  <<< "$( getBusyScreenIds "${sshPortNumberLst[tgtX]}" "${accountIdWithHost}" )"
+
+    quantityOfBusyScreens="${#screenAllBusyOnes[@]}"
+    screenLastBusyId="${screenAllBusyOnes[quantityOfBusyScreens - 1]}"
+    screenLastBusyNumericId="${screenLastBusyId/\:/}"
+    screenFreeId=":$(( screenLastBusyNumericId + 1 ))"
+    echo "${screenFreeId}"
+
+    # Need here error check: was it really found and composed a valid screen identifier.
+    #return ${codeFailure}
+    #return ${codeSuccess}
+}
+
+function printSingleRemoteScreenId {
+    local -r  sshPortNumber="${1:-22}"
+    local -r  accountIdWithHost="${2:-notSpecified@noName}"
+    local -r  accountIdPure="${accountIdWithHost%%@*}"
+    local -r  targetRfbPortNumber="${4}"
+
+    local remoteSessionScreenId=""
+
+    while read remoteSessionScreenId ; do
+        echo "${remoteSessionScreenId}"
+        break
+    done <<< "$( printAllListOfRemoteScreensId "${sshPortNumber}" "${accountIdWithHost}" "${accountIdPure}" "${targetRfbPortNumber}")"
+}
+
+function printAllListOfRemoteScreensId {
+    local -r  sshPortNumber="${1:-22}"
+    local -r  sshIdWithHost="${2:-notSpecifiedUser@notSpecifiedHost}"
+    local -r  targetUserId="${3}"
+    local -r  targetRfbPortNumber="${4}"
+
+    local -r exprWantedVncExe="X.+vnc"
+    local -r exprExcludeNonVncExe="X.+[[:space:]]+.+vnc[[:space:]]"
+
+    local    processOwner=""
+    local    processId=""
+    local    command=""
+    local    remoteSessionScreenId=""
+    local    misc=""
+
+    shopt -s extglob
+
+    targetRfbPortNumberExpression="rfbport ${targetRfbPortNumber}"
+    [ -z "${targetRfbPortNumber}" ] \
+        && targetRfbPortNumberExpression="."
+
+    while read processOwner processId command remoteSessionScreenId misc ; do
+        echo "${remoteSessionScreenId}"
+    done <<< "$( ssh -p "${sshPortNumber}" "${sshIdWithHost}" \
+                "ps ax -o user,pid,command \
+                    |  grep    \"^${targetUserId}\" \
+                    | egrep    \"${exprWantedVncExe}\" \
+                    | egrep -v \"${exprExcludeNonVncExe}\" \
+                    | egrep    \"${targetRfbPortNumberExpression}\" \
+                    |  grep -v grep " )"
+}
+
+function isAccountNumberIsInRange {
+    local tgtX="${1}"
+    local numberIsValid="0"
+    local numberIsWrong="1"
+    local isNumberOK="false"
+
+    if [ -z "${tgtX}" ] ; then
+        echo "ERROR:${0}:${LINENO}: Account's number not specified as argument to function or void." >&2
+    elif [[ "${tgtX}" != +([0-9]) ]] ; then \
+        echo "ERROR:${0}:${LINENO}: Account's number '${tgtX}' should be numeric value." >&2
+    elif \
+        [ "${tgtX}" -lt 1 ] \
+       || [  "${tgtX}" -gt ${vncNodesQuantity} ]
+    then
+        echo "ERROR:${0}:${LINENO}: The specified account's number '$(( tgtX + 1 ))' is out of range (1:${vncNodesQuantity})." >&2
+    else
+        isNumberOK="true"
+    fi
+
+    if [ ${isNumberOK} == "true" ] ; then
+        return ${codeSuccess}
+    else
+        exit ${errorMisc}
+    fi
+
+    exit ${errorEpic}
+}
+
+function isCommandRunning {
+    local -r tgtX="${1}"
+
+    local     pid=""
+    local     command=""
+
+    read pid command <<< "$( ps ax -o pid,command | grep "${tgtX}" | grep -v grep )"
+    echo "${pid}"
+
+    [ -z "${pid}" ] \
+        && [ -z "${command}" ] \
+        && return ${codeFailure}
+
+    return ${codeSuccess}
+
+}
+
+function listThemAll {
+    local idx=""
+    echo "№ | account:port(display)"
+    echo "--+----------------------"
+    for idx in $( seq 0 $(( ${#vncHostLst[*]} - 1 )) ) ; do
+        echo "$((${idx}+1)) | ${sshNameLst}@${vncHostLst}:${vncHostPortNumberLst[idx]}(${dispIdLst[idx]})"
+    done
+    return ${codeSuccess}
+}
+
+function isTunnelExist {
+    isAccountNumberIsInRange "${1}"
+    local -r tgtX=$(( ${1} - 1 ))
+
+    tunnelProcessId="$( ps aux | grep "ssh" | grep "\-L" | grep "${localTunPortNumberLst[tgtX]}:${tunHostLst[tgtX]}:${vncHostPortNumberLst[tgtX]}" | grep "\-p" | grep "${sshPortNumberLst[tgtX]}" | grep "${sshNameLst[tgtX]}@${vncHostLst[tgtX]}" )"
+    [ -n "${tunnelProcessId}" ] \
+        && return ${codeSuccess}
+    return ${codeFailure}
+}
+
+function wakeTunnelUp {
+    isAccountNumberIsInRange "${1}"
+    local -r tgtX=$(( ${1} - 1 ))
+
+    local    accountId="${sshNameLst[tgtX]}@${vncHostLst[tgtX]}"
+
+    local    tunHostLst[tgtX]="${tunHostLst[tgtX]}"
+    local    localTunPortNumberLst[tgtX]="${localTunPortNumberLst[tgtX]}"
+    local    vncHostPortNumberLst[tgtX]="${vncHostPortNumberLst[tgtX]}" # tunnel's remote port
+
+    local    command=""
+
+    command="ssh -N -L ${localTunPortNumberLst[tgtX]}:${tunHostLst[tgtX]}:${vncHostPortNumberLst[tgtX]} -p ${sshPortNumberLst[tgtX]} ${accountId}"
+
+    if ! isCommandRunning "${command}" ; then
+        ${command} &
+        [ ${?} == 0 ] \
+            && return ${codeSuccess}
+    else
+        echo "INFO:${0}:${LINENO}: It seems tunnel is already opened. Do nothing."
+        return ${codeSuccess}
+    fi
+    return ${codeFailure}
+}
+
+function wakeVNCServerUp {
+    isAccountNumberIsInRange "${1}"
+    local tgtX=$(( ${1} - 1 ))
+
+    local -r accountIdWithHost="${sshNameLst[tgtX]}@${vncHostLst[tgtX]}"
+    local -a vncHostPortNumberLst[tgtX]="${vncHostPortNumberLst[tgtX]}"
+    local -a screenSzLst[tgtX]="${screenSzLst[tgtX]}"
+
+    local    screenFreeId=""
+
+    screenFreeId="$( getFreeScreenId "${sshPortNumberLst[tgtX]}" "${accountIdWithHost}" )"
+
+    ##
+    # Here may be possible bug with VNC client-server relations. Ubuntu
+    # 'xvncviewer' (TightVNC on-board) and Fedora 'vncserver'
+    # (TigerVNC on-board) combination demonstrates floating server side
+    # screen resolution at values near to client's hardware display
+    # demensions. It may drift at VNC server launch, up to +4 pixel,
+    # both coordinates. Both distros are LXDE spins of official packs.
+    # Is it also affected with auto hide panels (LXPanel, FBPanel)???
+    #
+
+    # Will explicitly substitude X-Display identifier from settings and configuration data with obtained free identifier.
+    if ( ! ssh -p "${sshPortNumberLst[tgtX]}" "${accountIdWithHost}" "${vncServerExecutable} ${screenFreeId} -dpi ${screenDpi[tgtX]} -geometry ${screenSzLst[tgtX]} -nevershared -localhost -rfbport ${vncHostPortNumberLst[tgtX]} -nolisten tcp ${screenFreeId}" )
+    then
+        # XXX - sshNameLst[tgtX] must be evaluated at run time???
+        remoteProcessListEntry="$( printSingleRemoteScreenId "${sshPortNumberLst[tgtX]}" \
+                                  "${accountIdWithHost}" \
+                                  "${sshNameLst[tgtX]}" \
+                                  "${vncHostPortNumberLst[tgtX]}" )"
+        if [ -z "${remoteProcessListEntry}" ] ; then
+            echo "ERROR:${0}:${LINENO}: At node '${accountIdWithHost}' for account '${accountIdWithHost}:${sshPortNumberLst[tgtX]}(${dispIdLst[tgtX]})' failed to wake up VNC server." >&2
+            return ${codeFailure}
+        else
+            echo "WARNING:${0}:${LINENO}: It seems for account '${accountIdWithHost}:${sshPortNumberLst[tgtX]}(${dispIdLst[tgtX]})' VNC server already launched." >&2
+            return ${codeSuccess}
+        fi
+    else
+        return ${codeSuccess}
+    fi
+    return ${codeFailure}
+}
+
+function vncStart {
+    isAccountNumberIsInRange "${1}"
+    local -r tgtX=$(( ${1} - 1 ))
+
+    local accountId="${sshNameLst[tgtX]}@${vncHostLst[tgtX]}"
+
+    set -x
+
+    # XXX - SSH tunnel needs some time to restore connection. It may be tested on the fly, or it may have several connection attempts. The last seems more safe, it Netfilter have 'limit' rules on SSH's service port.
+    for attemptNumber in 1 2 3 ; do
+        echo "INFORMATION:${0}:${LINENO}:vncStart: Trying to wake up VNC server. Try number '${attemptNumber}'." >&2
+        if wakeVNCServerUp "$(( tgtX + 1 ))" ; then
+            return ${codeSuccess}
+        fi
+    done
+
+    return ${codeFailure}
+}
+
+
+function vncConnect {
+    isAccountNumberIsInRange "${1}"
+    local tgtX=$(( ${1} - 1 ))
+
+    local feedbackVncViewer=${codeFailure}
+
+    set -x
+
+    if ! isTunnelExist "$(( tgtX + 1 ))" ; then
+        ! wakeTunnelUp "$(( tgtX + 1 ))" \
+            && echo "ERROR:${0}:${LINENO}: Failed to detect or wakeup SSH tunnel to node '${sshNameLst[tgtX]}@${vncHostLst[tgtX]}'." >&2 \
+            && return ${codeFailure}
+    fi
+
+    # TODO - if have '\"' in a command, it will be parsed in unexpected manner.
+    vncViewConnectCommand="vncviewer -passwd ${passFileLst[tgtX]} ${tunHostLst[tgtX]}:${localTunPortNumberLst[tgtX]}"
+
+    # XXX - SSH tunnel needs some time to restore connection. It may be tested on the fly, or it may have several connection attempts. The last seems more safe, it Netfilter have 'limit' rules on SSH's service port.
+    for attemptNum in 1 2 ; do
+        echo "INFORMATION:${0}:${LINENO}: Going to connect with: '${vncViewConnectCommand}'. Try number '${attemptNum}'." >&2
+        ${vncViewConnectCommand} \
+            && return ${codeSuccess}
+        echo "ERROR:${0}:${LINENO}: VNC-Viewer launch try number '${attemptNum}' failed." >&2
+        sleep 3
+    done
+
+    echo "ERROR:${0}:${LINENO}: Failed with VNC viewer launch for host '${tunHostLst[tgtX]}:${localTunPortNumberLst[tgtX]}'." >&2
+    return ${codeFailure}
+}
+
+function vncStop {
+    isAccountNumberIsInRange "${1}"
+    local -r tgtX=$(( ${1} - 1 ))
+
+    local remoteSessionScreenId=""
+
+    remoteSessionScreenId=$( printSingleRemoteScreenId "${sshPortNumberLst[tgtX]}" "${sshNameLst[tgtX]}@${vncHostLst[tgtX]}" )
+
+    set -x
+
+    if ( ! ssh -p "${sshPortNumberLst[tgtX]}" "${sshNameLst[tgtX]}@${vncHostLst[tgtX]}" "${vncServerExecutable} -kill ${remoteSessionScreenId}" )
+    then
+        echo "ERROR:${0}:${LINENO}: Failed with server process shutdown on '${tunHostLst[tgtX]}:${localTunPortNumberLst[tgtX]}'. Check if X-Display identifier '${remoteSessionScreenId}' was detected properly inside this script." >&2
+        return ${codeFailure}
+    else
+        return ${codeSuccess}
+    fi
+}
+
+function sshTunnelShutdown {
+
+    isAccountNumberIsInRange "${1}"
+
+    local -ri index="$(( ${1} - 1 ))"
+
+    local -i  feedback=-1
+    local     pid=""
+    local -r  command="ssh -N -L ${localTunPortNumberLst[index]}:localhost:${vncHostPortNumberLst[index]} -p ${sshPortNumberLst[index]} ${sshNameLst[index]}@${vncHostLst[index]}"
+
+    set -x
+
+    while : ; do
+        pid="$( isCommandRunning "${command}" )"
+
+        if [ -n "${pid}" ] ; then
+            kill -9 ${pid} 2>/dev/null >/dev/null \
+                ; feedback=${?}
+        fi
+
+        [ "${feedback}" != 0 ] \
+            && echo "ERROR:${0}:${LINENO}: Failed to stop tunnel instance with PId='${pid}'. Is it already down?" >&2 \
+            && return ${codeFailure}
+
+        [ -z "${pid}" ] \
+            && [ "${feedback}" == 0 ] \
+            && return ${codeSuccess}
+
+    done
+    return ${codeFailure}
+}
+
+function getSingleNodeTextId {
+    local -r  containerNameForSingleNodeTextId="${1}"
+    local -ri numericId="$(( ${2} - 1 ))"
+    local -r  isWantedColored="${3}"
+
+    local -r  signWantedColored="color"
+    local     containerWithSingleNodeTextId=""
+
+    if [ "${isWantedColored}" == "${signWantedColored}" ] ; then
+        containerWithSingleNodeTextId="${sshNameLst[numericId]}\\Zb@\\Zn${vncHostLst[numericId]}\\Zb:\\Zn${vncHostPortNumberLst[numericId]}(${dispIdLst[numericId]})"
+    else
+        containerWithSingleNodeTextId="${sshNameLst[numericId]}@${vncHostLst[numericId]}:${vncHostPortNumberLst[numericId]}(${dispIdLst[numericId]})"
+    fi
+    eval ${containerNameForSingleNodeTextId}=\"'${containerWithSingleNodeTextId}'\"
+}
+
+function selectNodesListViaDialog {
+    local -r fileWithFeedback="${1}"
+    local -r selectionMode="${2:-"SINGLE_SELECT"}"
+
+    local -i ordinalNumber=0
+    local    singleNodeTextId=""
+    local    listBoxType=""
+    local    nodesList=""
+    local    feedback=""
+
+    checkIsExistRegularFile "${fileWithFeedback}"
+
+    listBoxType="$( getDialogListBoxType "${selectionMode}" )"
+
+    nodesList=""
+    for ordinalNumber in $( seq 1 $(( ${#sshNameLst[*]} )) ); do
+        getSingleNodeTextId "singleNodeTextId" "${ordinalNumber}" "color"
+        nodesList="${nodesList}${ordinalNumber}"
+        nodesList="${nodesList} ${singleNodeTextId}"
+        nodesList="${nodesList} off "
+    done
+
+    dialog --title " Select node " \
+            --backtitle "${backDialogTitle}" --clear \
+            --cancel-label "Exit" \
+            --colors \
+            --"${listBoxType}" "Nodes list:" 15 40 7 ${nodesList} \
+                    2>"${fileWithFeedback}" \
+        ; [ ${?} != 0 ] \
+                && echo "" \
+                && exit ${errorState}
+    feedback="$( cat "${fileWithFeedback}" | tr --delete \" )"
+    echo -n "${feedback}" > "${fileWithFeedback}"
+    echo "" # Nice output formating...
+}
+
+function selectActionViaDialog {
+    true
+    local -r  fileWithFeedback="${1}"
+    local -r  selectionMode="${2:-"SINGLE_SELECT"}"
+    local -r  singleTargetNode="${3}"
+
+    local -i  idx=0
+    local     listBoxType=""
+    local     singleNameForAction=""
+    local -a  listBoxItems=("")
+    local     actionsListDialogTitle=""
+
+    checkIsExistRegularFile "${fileWithFeedback}"
+
+    actionsListDialogTitle=" Actions selection "
+    [ -n "${singleTargetNode}" ] \
+        && actionsListDialogTitle=" ${singleTargetNode} "
+
+    unset listBoxItems \
+        ; getFormatedListForListBox "listBoxItems" "${knownNamesForActions[@]}"
+
+    listBoxType="$( getDialogListBoxType "${selectionMode}" )"
+    dialog --title "${actionsListDialogTitle}" \
+            --backtitle "${backDialogTitle}" --clear \
+            --cancel-label "Back" \
+            --"${listBoxType}" "Select action in list:" 14 40 6 "${listBoxItems[@]}" \
+                2>"${fileWithFeedback}" \
+        ; [ ${?} != 0 ] \
+                && echo -n "${markerGoBackRequested}" > "${fileWithFeedback}"
+    feedback="$( cat "${fileWithFeedback}" | tr --delete \" )"
+    echo -n "${feedback}" > "${fileWithFeedback}"
+    echo -en "\n" # Nice output formating...
+}
+
+function getFormatedListForListBox {
+    local -r containerNameForFormatedListForListBox="${1}"
+    shift 1
+    local -r givenNamesForListItems=("${@}")
+
+    local -a containerWithFormatedListForListBox=""
+    local -i idx=0
+    local    singleNameForListItem=""
+
+    # TODO - bind commands in dialog's listbox to alphabet letters.
+    declare -r tagsForListBox=({{a..z},{A..Z}}) # This is alphabet.
+    let local     letterCode=0141 # Octal number have leading 'O'.
+
+    idx=0
+    for singleNameForListItem in "${givenNamesForListItems[@]}" ; do
+        containerWithFormatedListForListBox[idx*3]="${singleNameForListItem}" #"${tagsForListBox[idx]}"
+        containerWithFormatedListForListBox[idx*3+1]=""
+        containerWithFormatedListForListBox[idx*3+2]="off"
+        ((idx++))
+    done
+    eval ${containerNameForFormatedListForListBox}=\(\"'${containerWithFormatedListForListBox[@]}'\"\)
+}
+
+function getThisName {
+    # XXX - 'readlink -f' must be used. There is no reason to deprecate it now.
+
+    local dName="$( dirname "${0}" )"
+    local fName="$( basename "${0}" )"
+
+    [ "${dName}" == "." ] && dName="$( pwd )"
+    echo "${dName}/${fName}"
+}
+
+function healPath {
+    local name="${1}"
+
+    [ "${name:0:1}" == "\"" ] \
+        || [ "${name:${#name}-1:1}" == "\"" ] \
+        && echo "ERROR:${0}:${LINENO}: Bad name format, double quotes are not allowed. Error token: ${name}" >&2
+
+    case "${name}" in
+    '.')
+        name="./"
+    ;;
+    '~')
+        name="~/"
+    ;;
+    esac
+    case "${name:0:2}" in
+    './')
+        name="$( pwd )/${name:2}"
+    ;;
+    '~/')
+        name="${HOME}/${name:2}"
+    ;;
+    esac
+
+    name="${name%/}" # Cut off trailing '/', if any.
+    echo "${name}"
+}
+
+function healPathForThePassFileLst {
+    local idx=""
+    for idx in $( seq 0 $(( ${#passFileLst[*]} - 1 )) ) ; do
+        passFileLst[idx]="$( healPath "${passFileLst[idx]}" )"
+    done
+}
+
+function showDoc {
+echo "USAGE:
+
+    $( basename "${0}" ) options
+
+OPTIONS
+
+    --ui - some user interface.
+    --help - show some documentation.
+
+COPYRIGHT AND LICENCE
+
+Copyright © 2011-2012 Alex Vesev. License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>.
+
+This is free software: you are free to change and redistribute it. There is NO WARRANTY, to the extent permitted by law.
+
+
+"
+}
+
+# # #
+ # #
+# #
+ #
+#
+
+[ ${#} == 0 ] \
+    && showDoc \
+    && exit ${errorMisc}
+routineName=""
+while [ ${#} != 0 ] ; do
+    case ${1%%=*} in
+        --ui)
+            routineName="${1%%=*}"
+            break
+        ;;
+        --list)
+            [ -n "${routineName}" ] \
+                && break
+            routineName="${1%%=*}"
+        ;;
+        --start|--connect|--stop)
+            [ -n "${routineName}" ] \
+                && break
+            routineName="${1%%=*}"
+            accountIdToProcess="${1#*=}"
+        ;;
+        *)
+            echo "ERROR:${0}:${LINENO}: Unknown parameter name '${1%%=*}'." >&2
+            exit ${errorMisc}
+        ;;
+    esac
+    shift 1
+done
+
+thisName="$( getThisName )"
+loadVNCNodesList
+healPathForThePassFileLst
+
+case "${routineName}" in
+--ui)
+    dialogTmpFile="$( mktemp )"
+
+    fileWithDialogFeedback="$( createTempFile )"
+
+    # TODO - split this UI dialogs sequence into separate functions.
+    while : ; do
+        selectNodesListViaDialog "${fileWithDialogFeedback}" "MULTI_SELECT" \
+            ; read -a selectedNodesNumbersList < "${fileWithDialogFeedback}"
+
+        [ -z "${selectedNodesNumbersList}" ] \
+            && continue
+
+        while : ; do
+            [ "${#selectedNodesNumbersList[@]}" == "1" ] \
+                && getSingleNodeTextId "selectedSingleNodeIdString" "${selectedNodesNumbersList[0]}"
+
+            selectActionViaDialog "${fileWithDialogFeedback}" \
+                                    "MULTI_SELECT" \
+                                    "${selectedSingleNodeIdString}" \
+                ; read selectedActions < "${fileWithDialogFeedback}"
+
+            [ "${selectedActions}" == "${markerGoBackRequested}" ] \
+                && break
+
+            selectedActions="$( splitListToStringsWithActionsNames "${selectedActions}" )"
+
+            processAllSelectedNodes "${selectedActions}" "${selectedNodesNumbersList[@]}"
+            echo ""
+            read -p "    Press 'Enter' to proceed..."
+        done
+    done
+    rm -f "${fileWithDialogFeedback}"
+    exit ${errorState}
+;;
+--list)
+    listThemAll "${accountIdToProcess}"
+    exit ${errorState}
+;;
+--start)
+    isAccountNumberIsInRange "${accountIdToProcess}"
+    vncStart "${accountIdToProcess}"
+    exit ${errorState}
+;;
+--connect)
+    isAccountNumberIsInRange "${accountIdToProcess}"
+    vncConnect "${accountIdToProcess}"
+    exit ${errorState}
+;;
+--stop)
+    isAccountNumberIsInRange "${accountIdToProcess}"
+    vncStop "${accountIdToProcess}"
+    exit ${errorState}
+;;
+*)
+    echo "ERROR:${0}:${LINENO}: Unknown routine name '${routineName}'." >&2
+    exit ${errorMisc}
+;;
+esac
+
+[ "${errorState}" != "${noErrorDetected}" ] \
+    && echo "ERROR:${0}:${LINENO}: Finished with errors." >&2
+read -p "    Job done. Press 'Enter' to exit..."
+exit ${errorState}
+
+# # #
+ # #
+# #
+ #
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+    # TODO: DPI must be calculated, but not a magic number.
+    # Helper - xdpyinfo | egrep "(dimension|resolution)"
+    # See 'xdpyinfo' output physically at VNC server. Via SSH you'll not obtain real value.
+    # In /etc/xorg.conf
+    # For 1900×1600 dimensions and 96dpi: DisplaySize <-> pixelQuantity/96*25.4
+    # DisplaySize 1900/96*25.4 1600/96*25.4
+    # Have:
+    # Section "Monitor"
+    #     Identifier     "Monitor0"
+    #     VendorName     "Unknown"
+    #     ModelName      "Lite-On S1770NSL"
+    #     DisplaySize     270    203
+    #     HorizSync       30.0 - 70.0
+    #     VertRefresh     50.0 - 160.0
+    #     Option         "DPMS"
+    #
+    #     #DisplaySize 1900/96*25.4 1600/96*25.4 #1900x1600 96dpi
+    #     DisplaySize 502.7 423.3 #1900x1600 96dpi
+    # EndSection
+
+    #declare -r remoteScreenDPI="86" # Nec 1280x1024, 19". See - xdpyinfo | egrep "(dimension|resolution)" - physically at VNC server. Via SSH you'll not obtain real value.
+
+    #case "${screenSzLst[tgtX]}" in
+        #partial|--partial|-p)
+            #screenSzLst[tgtX]=1360x712
+        #;;
+        #bordered|--bordered|-b)
+            #screenSzLst[tgtX]=1360x744
+        #;;
+        #undecorated|--undecorated|-u)
+            #screenSzLst[tgtX]=1362x766
+        #;;
+        #full|--full|-f)
+            #screenSzLst[tgtX]=1366x768
+        #;;
+    #esac

@@ -1,0 +1,1198 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ru" dir="ltr" lang="ru"><head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<title>Tightvnc-ssh-terminal-server | Русскоязычная документация по Ubuntu</title><link rel="shortcut icon" href="http://help.ubuntu.ru/lib/tpl/ubuntu-portal/images/favicon.ico">
+<link rel="apple-touch-icon" href="http://help.ubuntu.ru/lib/tpl/ubuntu-portal/images/apple-touch-icon.png">
+		<link href="Tightvnc-ssh-terminal-server_files/css_004.css" rel="stylesheet" type="text/css">
+				<link rel="stylesheet" type="text/css" href="Tightvnc-ssh-terminal-server_files/ubuntu-portal.css">
+		<meta name="generator" content="DokuWiki">
+<meta name="robots" content="index,follow">
+<meta name="date" content="2013-10-12T22:55:47+0400">
+<meta name="keywords" content="sagemath,supaplex,fixme,tightvnc-ssh-terminal-server">
+<link rel="search" type="application/opensearchdescription+xml" href="http://help.ubuntu.ru/lib/exe/opensearch.php" title="Русскоязычная документация по Ubuntu">
+<link rel="start" href="http://help.ubuntu.ru/">
+<link rel="contents" href="http://help.ubuntu.ru/wiki/tightvnc-ssh-terminal-server?do=index" title="Все страницы">
+<link rel="alternate" type="application/rss+xml" title="Recent Changes" href="http://help.ubuntu.ru/feed.php">
+<link rel="alternate" type="application/rss+xml" title="Current Namespace" href="http://help.ubuntu.ru/feed.php?mode=list&amp;ns=wiki">
+<link rel="alternate" type="text/html" title="Plain HTML" href="http://help.ubuntu.ru/_export/xhtml/wiki/tightvnc-ssh-terminal-server">
+<link rel="alternate" type="text/plain" title="Wiki Markup" href="http://help.ubuntu.ru/_export/raw/wiki/tightvnc-ssh-terminal-server">
+<link rel="canonical" href="http://help.ubuntu.ru/wiki/tightvnc-ssh-terminal-server">
+<link rel="stylesheet" media="screen" type="text/css" href="Tightvnc-ssh-terminal-server_files/css.css">
+<link rel="stylesheet" media="all" type="text/css" href="Tightvnc-ssh-terminal-server_files/css_002.css">
+<link rel="stylesheet" media="print" type="text/css" href="Tightvnc-ssh-terminal-server_files/css_003.css">
+<script type="text/javascript"><!--//--><![CDATA[//><!--
+var NS='wiki';var JSINFO = {"id":"wiki:tightvnc-ssh-terminal-server","namespace":"wiki"};
+//--><!]]></script>
+<script type="text/javascript" charset="utf-8" src="Tightvnc-ssh-terminal-server_files/js.php"></script>
+		<script type="text/javascript" src="Tightvnc-ssh-terminal-server_files/ubuntu-portal.js"></script>		<script type="text/javascript">
+			var _gaq = _gaq || [];
+			_gaq.push(['_setAccount', 'UA-4515300-6']);
+			_gaq.push(['_trackPageview']);
+			(function() {
+				var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+				ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+				var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+			})();
+		</script>
+</head>
+<body class="with-bottom-panel act-show">
+<div id="__container">
+<!-- Document -->
+<div>
+	<!-- Page -->
+	<div id="__page">
+		<div id="__wrapper"><div>
+			<!-- Header -->
+			<div id="__header">
+	<div id="__header-menu">
+		<ul>
+			<li>
+				<a href="http://ubuntu.ru/" title="Главная страница сайта ubuntu.ru">Сайт</a>			</li>
+			<li>
+				<a href="http://forum.ubuntu.ru/" title="Форум русскоязычного сообщества Ubuntu. На нём вы можете задать интересующие вас вопросы и получить помощь от других пользователей Ubuntu.">Форум</a>			</li>
+			<li>
+				<a href="http://help.ubuntu.ru/" title="Различная русскоязычная документация по семейству операционных систем на базе Ubuntu" class="active">Документация</a>					<div class="header-submenu">
+						<div>
+							<ul>
+								<li>
+					<a href="http://help.ubuntu.ru/wiki" title="Документация, создаваемая пользователями Ubuntu" class="active">Пользовательская документация</a>
+				<div class="header-popup">
+					<ul>
+						<li><a href="http://help.ubuntu.ru/wiki/%D1%81%D0%B5%D0%BC%D0%B5%D0%B9%D1%81%D1%82%D0%B2%D0%BE_ubuntu" title="Документация по дистрибутивам, входящим в семейство Ubuntu">Семейство Ubuntu</a></li>
+						<li><a href="http://help.ubuntu.ru/wiki/%D1%80%D1%83%D0%BA%D0%BE%D0%B2%D0%BE%D0%B4%D1%81%D1%82%D0%B2%D0%B0" title="Различные материалы по Ubuntu, доступные для загрузки">Материалы для загрузки</a></li>
+						<li><a href="http://help.ubuntu.ru/wiki/%D1%81%D0%BE%D0%B2%D0%BC%D0%B5%D1%81%D1%82%D0%B8%D0%BC%D0%BE%D1%81%D1%82%D1%8C" title="Раздел, посвящённый совместимости Ubuntu с оборудованием, в первую очередь - с ноутбуками">Совместимость с оборудованием</a></li>
+					</ul>
+				</div></li>
+								<li><a href="http://help.ubuntu.ru/doc" title="Переводы официальной документации по Ubuntu на русский язык">Официальная документация</a></li>
+							</ul>
+									<div id="__header-controls">			<div id="__header-user"><a href="http://help.ubuntu.ru/wiki/tightvnc-ssh-terminal-server?do=login&amp;sectok=1b4348b8151d9676f348356508fc47bb" class="action login" rel="nofollow" title="Войти">Войти / Зарегистрироваться</a>			</div>		</div>							<div class="clearer"></div>
+						</div>
+					</div>
+							</li>
+			<li>
+				<a href="http://team.ubuntu.ru/" title="Материалы, касающиеся работы русскоязычного сообщества и русскоязычной LoCo команды Ubuntu">Сообщество</a>			</li>
+			<li>
+				<a href="http://ubuntu.ru/get" title="Страница получения дистрибутива Ubuntu">Скачать Ubuntu</a>			</li>
+		</ul>
+		<div id="__header-logo">
+			<a href="http://ubuntu.ru/" title="На главную страницу сайта">
+				<img src="Tightvnc-ssh-terminal-server_files/logo_ru.png" alt="">
+			</a>
+		</div>
+	</div>
+	<div id="__search-box">
+		<form action="/" accept-charset="utf-8" class="search" id="dw__search" method="get"><div class="no"><input name="do" value="search" type="hidden"><input id="qsearch__in" accesskey="f" name="id" class="edit" title="[F]" type="text"><input value="Поиск" class="button" title="Поиск" type="submit"><div id="qsearch__out" class="ajax_qsearch JSpopup"></div></div></form>	</div>
+</div>
+			<!-- /Header -->
+			<!-- Main -->
+							<div id="__main">
+					<div id="__main-title">
+						<h1><a name="tightvnc-ssh-terminal-server" id="tightvnc-ssh-terminal-server">Tightvnc-ssh-terminal-server</a></h1>
+					</div>
+					<div class="msgarea">
+											</div>
+					<div class="content">
+						<div class="content-main dokuwiki">
+							<!-- TOC START -->
+<div class="toc">
+<div class="tocheader toctoggle" id="toc__header">Содержание</div>
+<div id="toc__inside">
+
+<ul class="toc">
+<li class="level1"><div class="li"><span class="li"><a href="#tightvnc-ssh-terminal-server" class="toc">Tightvnc-ssh-terminal-server</a></span></div></li>
+<li class="level1"><div class="li"><span class="li"><a href="#%D0%B3%D1%80%D0%B0%D1%84%D0%B8%D1%87%D0%B5%D1%81%D0%BA%D0%B8%D0%B9_%D1%81%D0%B5%D1%80%D0%B2%D0%B5%D1%80_%D1%82%D0%B5%D1%80%D0%BC%D0%B8%D0%BD%D0%B0%D0%BB%D0%BE%D0%B2_-_%D0%B7%D0%B0%D1%89%D0%B8%D1%89%D1%91%D0%BD%D0%BD%D1%8B%D0%B9_%D1%83%D0%B4%D0%B0%D0%BB%D1%91%D0%BD%D0%BD%D1%8B%D0%B9_%D0%B2%D1%85%D0%BE%D0%B4_%D0%B1%D0%B5%D0%B7_%D0%BF%D0%BE%D1%82%D0%B5%D1%80%D0%B8_%D0%B8%D0%BD%D1%84%D0%BE%D1%80%D0%BC%D0%B0%D1%86%D0%B8%D0%B8_%D0%B2_%D1%81%D0%BB%D1%83%D1%87%D0%B0%D0%B5_%D0%BF%D0%BE%D1%81%D0%BB%D0%B5%D0%B4%D1%83%D1%8E%D1%89%D0%B5%D0%B3%D0%BE_%D1%80%D0%B0%D0%B7%D1%80%D1%8B%D0%B2%D0%B0" class="toc">Графический сервер терминалов - защищённый удалённый вход, без потери информации в случае последующего разрыва</a></span></div>
+<ul class="toc">
+<li class="level2"><div class="li"><span class="li"><a href="#%D0%BD%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B8_%D1%81%D0%B5%D1%80%D0%B2%D0%B5%D1%80%D0%B0" class="toc">Настройки сервера</a></span></div></li>
+<li class="level2"><div class="li"><span class="li"><a href="#%D0%BD%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0_%D0%BA%D0%BB%D0%B8%D0%B5%D0%BD%D1%82%D0%B0" class="toc">Настройка клиента</a></span></div></li>
+<li class="level2"><div class="li"><span class="li"><a href="#%D0%B7%D0%B0%D0%BF%D1%83%D1%81%D0%BA_%D1%81%D0%B5%D1%80%D0%B2%D0%B5%D1%80%D0%B0_%D0%B8_%D0%BF%D0%BE%D0%B4%D0%BA%D0%BB%D1%8E%D1%87%D0%B5%D0%BD%D0%B8%D0%B5_%D0%BA%D0%BB%D0%B8%D0%B5%D0%BD%D1%82%D0%B0" class="toc">Запуск сервера и подключение клиента</a></span></div>
+<ul class="toc">
+<li class="level3"><div class="li"><span class="li"><a href="#%D0%BD%D0%B0_%D1%81%D1%82%D0%BE%D1%80%D0%BE%D0%BD%D0%B5_%D1%81%D0%B5%D1%80%D0%B2%D0%B5%D1%80%D0%B0" class="toc">На стороне сервера</a></span></div></li>
+<li class="level3"><div class="li"><span class="li"><a href="#%D0%BD%D0%B0_%D1%81%D1%82%D0%BE%D1%80%D0%BE%D0%BD%D0%B5_%D0%BA%D0%BB%D0%B8%D0%B5%D0%BD%D1%82%D0%B0" class="toc">На стороне клиента</a></span></div></li>
+</ul>
+</li>
+<li class="level2"><div class="li"><span class="li"><a href="#%D0%BA%D0%B0%D0%BA_%D0%B7%D0%B0%D0%BF%D1%83%D1%81%D0%BA%D0%B0%D1%82%D1%8C_%D0%BF%D1%80%D0%BE%D0%B3%D1%80%D0%B0%D0%BC%D0%BC%D1%8B" class="toc">Как запускать программы</a></span></div></li>
+<li class="level2"><div class="li"><span class="li"><a href="#%D0%BA%D0%B0%D0%BA%D1%83%D1%8E_%D1%81%D0%B5%D1%81%D1%81%D0%B8%D1%8E_%D0%B7%D0%B0%D0%BF%D1%83%D1%81%D0%BA%D0%B0%D1%82%D1%8C" class="toc">Какую сессию запускать</a></span></div></li>
+<li class="level2"><div class="li"><span class="li"><a href="#%D0%B7%D0%B0%D0%BF%D1%83%D1%81%D0%BA_%D0%B2_%D0%BF%D0%BE%D0%BB%D0%BD%D1%8B%D0%B9_%D1%8D%D0%BA%D1%80%D0%B0%D0%BD_%D0%B1%D0%B5%D0%B7_%D0%BF%D0%BE%D1%82%D0%B5%D1%80%D0%B8_%D1%81%D0%B2%D1%8F%D0%B7%D0%B8_%D1%81_%D0%BB%D0%BE%D0%BA%D0%B0%D0%BB%D1%8C%D0%BD%D0%BE%D0%B9_%D0%BF%D0%B0%D0%BD%D0%B5%D0%BB%D1%8C%D1%8E_%D0%BA%D0%BB%D0%B8%D0%B5%D0%BD%D1%82%D0%B0" class="toc">Запуск в полный экран без потери связи с локальной панелью клиента</a></span></div></li>
+<li class="level2"><div class="li"><span class="li"><a href="#%D0%BF%D1%80%D0%B0%D0%B2%D0%B8%D0%BB%D0%B0_ufw" class="toc">Правила ufw</a></span></div></li>
+<li class="level2"><div class="li"><span class="li"><a href="#%D0%BB%D0%B8%D1%82%D0%B5%D1%80%D0%B0%D1%82%D1%83%D1%80%D0%B0" class="toc">Литература</a></span></div></li>
+<li class="level2"><div class="li"><span class="li"><a href="#%D0%BF%D1%80%D0%B8%D0%BB%D0%BE%D0%B6%D0%B5%D0%BD%D0%B8%D1%8F" class="toc">Приложения</a></span></div>
+<ul class="toc">
+<li class="level3"><div class="li"><span class="li"><a href="#%D0%BF%D1%80%D0%BE%D0%B1%D0%BB%D0%B5%D0%BC%D0%B0_%D1%81_virtualgl_%D0%B8_lightdm" class="toc">Проблема с VirtualGL и LightDM</a></span></div></li>
+<li class="level3"><div class="li"><span class="li"><a href="#%D1%84%D0%B0%D0%B9%D0%BB_%D0%BA%D0%BE%D0%BD%D1%84%D0%B8%D0%B3%D1%83%D1%80%D0%B0%D1%86%D0%B8%D0%B8_fbpanel" class="toc">Файл конфигурации Fbpanel</a></span></div></li>
+<li class="level3"><div class="li"><span class="li"><a href="#%D1%84%D0%B0%D0%B9%D0%BB_%D0%B7%D0%B0%D0%BF%D1%83%D1%81%D0%BA%D0%B0_%D0%B3%D1%80%D0%B0%D1%84%D0%B8%D1%87%D0%B5%D1%81%D0%BA%D0%BE%D0%B9_%D1%81%D0%B5%D1%81%D1%81%D0%B8%D0%B8" class="toc">Файл запуска графической сессии</a></span></div></li>
+</ul>
+</li>
+<li class="level2"><div class="li"><span class="li"><a href="#%D1%81%D1%81%D1%8B%D0%BB%D0%BA%D0%B8" class="toc">Ссылки</a></span></div></li>
+</ul></li>
+</ul>
+</div>
+</div>
+<!-- TOC END -->
+<h1 class="sectionedit2"><a name="графический_сервер_терминалов_-_защищённый_удалённый_вход_без_потери_информации_в_случае_последующего_разрыва" id="графический_сервер_терминалов_-_защищённый_удалённый_вход_без_потери_информации_в_случае_последующего_разрыва">Графический сервер терминалов - защищённый удалённый вход, без потери информации в случае последующего разрыва</a></h1>
+<div class="level1">
+<p></p><div class="noteimportant">Данная статья описывает настройку и работу с программами в ОС Lubuntu. <br>
+Тем не менее, описанные процедуры должны быть идентичны и в других дистрибутивах семейства Ubuntu.
+</div><p></p>
+<p>
+Возникла потребность, работая на слабом переносном компьютере 
+подключаться к мощному серверу и использовать вычислительные ресурсы 
+только мощной машины. А также: при отключении переносного компьютера все
+ запущенные на мощной машине программы остаются запущенными, спустя 
+произвольное время можно подключиться обратно и продолжить работу с того
+ же места, где остановился. Мощной машиной может быть домашний 
+настольный компьютер, назовём его Сервер. Переносным может быть 
+слабенький планшет, назовём его Клиент. При этом возможная параллельная,
+ локальная для Сервера сессия и удалённая сессия друг на друга не 
+влияют. На Сервере могут независимо работать несколько человек. В т.ч., 
+один из них может работать сидя за физическими клавиатурой и монитором.
+</p>
+
+<p>
+Есть много разных описаний как сделать похожее, но редкость найти как 
+сделать вышеописанную конфигурацию. А уж о том, что VNC и X-Server 
+forwarding через <acronym title="Secure Shell">SSH</acronym> не позволяют 3D вычисления переложить на видео плату мощной машины, нагружая тонкого клиента - это мне совсем не попадалось.
+</p>
+
+<p>
+В разное время для разных VNC и сходных серверов по разному была 
+устроена защита передаваемой по сети информации. Проще говоря - раньше 
+её не было. Сейчас у кого-то защита есть, у кого-то - нет. Здесь 
+описывается соединение через канал защищённый <acronym title="Secure Shell">SSH</acronym>.
+</p>
+
+<p>
+В статье неоднократно упоминаются файлы и каталоги изначально 
+отсутствующие в системе. Такие каталоги и файлы надо создать, содержимое
+ файлов описано или непосредственно в статье, или в отдельном списке, в 
+конце статьи.
+</p>
+
+<p>
+Во всех случаях, если не оговорено иного, считается что все команды и 
+действия осуществляются от имени пользователя для которого настраивается
+ доступ. И для Сервера, и для Клиента.
+</p>
+
+<p>
+Предполагается, что команды выполняются в графическом эмуляторе 
+терминала, имеющем возможность copy-paste, там, где эта возможность 
+нужна.
+</p>
+
+<p>
+Слово username означает в статье имя пользователя. Слово hostserver в 
+статье означает доменное имя или IP адрес Сервера, hostclient - Клиента.
+</p>
+<p></p><div class="noteclassic"><em>Cущественные замечания, поправки, 
+предложения, касающиеся статьи и конфигураций, обеспечивающих решение 
+сформулированной выше задачи (именно той), буду рад видеть в теме форума
+ - «Графический сервер терминалов - защищённый удалённый вход» <a href="http://www.lubuntu.ru/forum/viewtopic.php?f=2&amp;t=826" class="urlextern" title="http://www.lubuntu.ru/forum/viewtopic.php?f=2&amp;t=826" rel="nofollow">http://www.lubuntu.ru/forum/viewtopic.php?f=2&amp;t=826</a></em>
+</div><p></p>
+</div>
+
+<h2 class="sectionedit3"><a name="настройки_сервера" id="настройки_сервера">Настройки сервера</a></h2>
+<div class="level2">
+
+<p>
+Используемые программы:
+</p>
+<pre class="code">tightvncserver - сам VNC сервер,
+openssh-server - SSH сервер для защиты соединения
+fbpanel - "панель задач", используется для упрощения настройки многих сессий для одного пользователя,
+feh - примитивная поддержка фонов экрана,
+zenity - используется для отображения на экране оповещений.</pre>
+
+<p>
+У 'tightvncserver' есть синоним 'vncserver'. Наличие этого синонима, 
+возможные параметры командной строки для синонима, неуникальны для 
+семейства Ubuntu. В некоторых дистрибутивах (не поручусь за все) можно 
+устанавливать другие реализации VNC сервера, использовать этот синоним и
+ изложенное ниже будет работоспособно.
+</p>
+
+<p>
+Установка программ:
+</p>
+<pre class="code">sudo apt-get install tightvncserver openssh-server fbpanel feh zenity</pre>
+
+<p>
+Все настройки <acronym title="Secure Shell">SSH</acronym> сервера можно 
+оставить как есть. Однако удобно настроить авторизацию с помощью ключей 
+вместо паролей. Это и улучшает безопасность, и позволяет вводит пароль 
+один раз за время работы Клиента. Такая настройка отдельная тема и здесь
+ её не освещаю, пусть настройки остаются как есть.
+</p>
+
+<p>
+В зависимости от ситуации может оказаться удобным использовать не 
+обычную LXDE сессию, а OpenBox, например. Поэтому делаются минимальные 
+настройки для удобной работы в OpenBox.
+</p>
+
+<p>
+При нескольких сессия для одного пользователя удобно иметь панель 
+независимую от LXPanel. Это fbpanel и её настройка сводится к размещению
+ в '~/.config/fbpanel' файла <a href="#%D1%84%D0%B0%D0%B9%D0%BB_%D0%BA%D0%BE%D0%BD%D1%84%D0%B8%D0%B3%D1%83%D1%80%D0%B0%D1%86%D0%B8%D0%B8_fbpanel" title="wiki:tightvnc-ssh-terminal-server ↵" class="wikilink1">'vnc-fbpanel.conf'</a>, содержимое которого приведено в конце статьи.
+</p>
+
+<p>
+Вводим команды:
+</p>
+<pre class="code">mkdir -p ~/.config/openbox/
+mkdir -p ~/.config/fbpanel/
+touch ~/.config/openbox/autostart.sh
+echo "" &gt;&gt; "${HOME}/.config/openbox/autostart.sh"
+echo "feh -bg-scale '/usr/share/lubuntu/wallpapers/lubuntu-default-wallpaper.png' &amp;" &gt;&gt; "${HOME}/.config/openbox/autostart.sh"
+echo "fbpanel --profile vnc-fbpanel.conf &amp;" &gt;&gt; "${HOME}/.config/openbox/autostart.sh"</pre>
+
+<p>
+Для включения отображения текста гладкими шрифтами нужно создать файл '~/.fonts.conf' и поместить в него содержимое:
+</p>
+<dl class="file">
+<dt><a href="http://help.ubuntu.ru/_export/code/wiki/tightvnc-ssh-terminal-server?codeblock=3" title="Скачать код" class="mediafile mf_conf">~/.fonts.conf</a></dt>
+<dd><pre class="code file xml"><span class="sc3"><span class="re1">&lt;?xml</span> <span class="re0">version</span>=<span class="st0">"1.0"</span><span class="re2">?&gt;</span></span>
+<span class="sc0">&lt;!DOCTYPE fontconfig SYSTEM "fonts.dtd"&gt;</span>
+<span class="sc3"><span class="re1">&lt;fontconfig<span class="re2">&gt;</span></span></span>
+  <span class="sc-1">&lt;!-- Включить сглаживание для всего и вся. --&gt;</span>
+  <span class="sc3"><span class="re1">&lt;match</span> <span class="re0">target</span>=<span class="st0">"font"</span> <span class="re2">&gt;</span></span>
+    <span class="sc3"><span class="re1">&lt;edit</span> <span class="re0">mode</span>=<span class="st0">"assign"</span> <span class="re0">name</span>=<span class="st0">"hinting"</span> <span class="re2">&gt;</span><span class="re1">&lt;bool<span class="re2">&gt;</span></span></span>true<span class="sc3"><span class="re1">&lt;/bool<span class="re2">&gt;</span></span><span class="re1">&lt;/edit<span class="re2">&gt;</span></span></span>
+  <span class="sc3"><span class="re1">&lt;/match<span class="re2">&gt;</span></span></span>
+  <span class="sc3"><span class="re1">&lt;match</span> <span class="re0">target</span>=<span class="st0">"font"</span> <span class="re2">&gt;</span></span>
+    <span class="sc3"><span class="re1">&lt;edit</span> <span class="re0">mode</span>=<span class="st0">"assign"</span> <span class="re0">name</span>=<span class="st0">"hintstyle"</span> <span class="re2">&gt;</span><span class="re1">&lt;const<span class="re2">&gt;</span></span></span>hintfull<span class="sc3"><span class="re1">&lt;/const<span class="re2">&gt;</span></span><span class="re1">&lt;/edit<span class="re2">&gt;</span></span></span>
+  <span class="sc3"><span class="re1">&lt;/match<span class="re2">&gt;</span></span></span>
+  <span class="sc3"><span class="re1">&lt;match</span> <span class="re0">target</span>=<span class="st0">"font"</span> <span class="re2">&gt;</span></span>
+    <span class="sc3"><span class="re1">&lt;edit</span> <span class="re0">mode</span>=<span class="st0">"assign"</span> <span class="re0">name</span>=<span class="st0">"antialias"</span> <span class="re2">&gt;</span><span class="re1">&lt;bool<span class="re2">&gt;</span></span></span>true<span class="sc3"><span class="re1">&lt;/bool<span class="re2">&gt;</span></span><span class="re1">&lt;/edit<span class="re2">&gt;</span></span></span>
+  <span class="sc3"><span class="re1">&lt;/match<span class="re2">&gt;</span></span></span>
+<span class="sc3"><span class="re1">&lt;/fontconfig<span class="re2">&gt;</span></span></span></pre>
+</dd></dl>
+
+<p>
+При желании в этом же файле можно гибко настраивать сглаживание и 
+hinting для отдельных шрифтов и семейств шрифтов. Файл обрабатывается 
+последовательно. Можно сначала включить все возможности, а потом 
+избирательно отключать для конкретных шрифтов, для конкретных 
+начертаний(жирный и т.п.) шрифта.
+</p>
+
+<p>
+Однако наибольшее влияние оказывает правильный выбор разрешения экрана. 
+Для определения значения оптимального количества точек на дюйм нужно 
+непосредственно на Сервере запустить команду:
+</p>
+<pre class="code">xdpyinfo | egrep "(dimensions|resolution)"</pre>
+
+<p>
+Команду надо запускать из физической консоли. Т.е. сидя за монитором 
+сервера, набирая команду на физической клавиатуре сервера. Похоже, что 
+по <acronym title="Secure Shell">SSH</acronym> не удаётся просто так 
+получить разрешение используемое Сервером локально, а именно оно равно 
+или близко к оптимальному. Плотность точек может быть выдана не 
+симметричная, что-то вроде 95×96, например.
+</p>
+
+<p>
+Пускай у нас получилось: 96×96, разрешение в dpi равно 96. Запоминаем 
+это число, в голове или на бумажке. Оно понадобится при запуске VNC 
+сервера, но до этого ещё далеко. Если пара была несимметричная - оба 
+числа запоминаем.
+</p>
+
+<p>
+Попутно, выше приведённая команда покажет размер изображения на мониторе
+ в точках. Эта возможность не используется для Сервера, но используется 
+на Клиенте.
+</p>
+
+<p>
+Нужно создать файл запускающий на сервере по вызову VNC сервера сессию с графическим окружением.
+</p>
+
+<p>
+Выполняем команды:
+</p>
+<pre class="code">mkdir -p ~/.vnc/
+touch ~/.vnc/xstartup
+nano ~/.vnc/xstartup</pre>
+
+<p>
+Теперь копируем в буфер обмена приведённое в конце статьи содержимое файла <a href="#%D1%84%D0%B0%D0%B9%D0%BB_%D0%B7%D0%B0%D0%BF%D1%83%D1%81%D0%BA%D0%B0_%D0%B3%D1%80%D0%B0%D1%84%D0%B8%D1%87%D0%B5%D1%81%D0%BA%D0%BE%D0%B9_%D1%81%D0%B5%D1%81%D1%81%D0%B8%D0%B8" title="wiki:tightvnc-ssh-terminal-server ↵" class="wikilink1">'~/.vnc/xstartup'</a>,
+ делаем вставку из буфера в окно терминала, где была дана команда 'nano 
+~/.vnc/xstartup'. Дальше надо нажать Ctrl+O, согласится с записью в 
+файл, нажать Ctrl+X для выхода. Теперь команда:
+</p>
+<pre class="code">chmod +x ~/.vnc/xstartup</pre>
+
+<p>
+VNC сервер умеет проверять аутентичность по паролю. Не все из VNC 
+серверов умеют защищать трафик после ввода пароля. Независимо - включим 
+защиту паролем. Точнее, даже не паролем, а файлом-ключом.
+</p>
+
+<p>
+Вводим команду:
+</p>
+<pre class="code">vncpasswd ~/.vnc/passwd
+cp ~/.vnc/passwd ~/.vnc/passwd.username.hostserver</pre>
+
+<p>
+В процессе выполнения будут созданы копия и сам файл-ключ, описывающий пароли для полного доступа и для доступа «только чтение».
+</p>
+
+<p>
+Созданная копия файла - '~/.vnc/passwd.username.hostserver' - нужна для 
+настройки Клиента, если в последующем не охота вводить дополнительный 
+пароль при каждом VNC подключении. Копия файла помещается в '~/.vnc/' на
+ Клиенте. Эту копию надо перенести на Клиента.
+</p>
+
+<p>
+Файл бинарный. Не выйдет просто так сделать copy-paste - зайти с Клиента на Сервер через <acronym title="Secure Shell">SSH</acronym>,
+ сделать копировать в консоли Сервера и вставить в консоли Клиента в 
+редактор nano. Вероятно, можно использовать 'hexedit'. Также можно 
+задействовать 'sshfs', если она установлена, и скопировать файл на 
+сервер обычным путём. См. <a href="http://help.ubuntu.ru/wiki/ssh" class="wikilink1" title="wiki:ssh">SSHFS - файловый сервер быстро и просто</a>.
+ С точки зрения наличия 'sshfs' логистика верна. С точки зрения 
+отсутствия 'sshfs' и т.п., принципов безопасности - файл надо  
+переносить на флешке и т.п.
+</p>
+
+</div>
+
+<h2 class="sectionedit4"><a name="настройка_клиента" id="настройка_клиента">Настройка клиента</a></h2>
+<div class="level2">
+
+<p>
+Предлагается использовать 'xtightvncviewer'. Вероятно кому-то подойдёт что-то другое. Инсталлируем:
+</p>
+<pre class="code">sudo apt-get install xtightvncviewer</pre>
+
+<p>
+Созданный ранее на сервере и перенесённый на клиента файл-ключ помещается в файл '~/.vnc/passwd.username.hostserver'.
+</p>
+
+<p>
+Налаживаем защищённый туннель к серверу. Пробуем работоспособность <acronym title="Secure Shell">SSH</acronym> вообще. Команда:
+</p>
+<pre class="code">ssh username@hostserver</pre>
+
+<p>
+Если сервер впустил к себе, написал в приглашении к вводу команды своё имя, то всё хорошо. Закрываем эту сессию командой:
+</p>
+<pre class="code">exit</pre>
+
+<p>
+Пробуем команду:
+</p>
+<pre class="code">ssh -L 12345:localhost:5901 username@hostserver</pre>
+
+<p>
+Если не было сообщений об ошибках, то туннель создан, факт его существования можно увидеть по команде:
+</p>
+<pre class="code">ps ax -o pid,command | grep ssh | grep "\-L"</pre>
+
+<p>
+Закрывается туннель утилитой kill. Способом описанным выше, через 
+команду ps, получаем число-идентификатор процесса отвечающего за туннель
+ (первое число в полученной строке, или число в первом столбце списка). 
+Далее команда:
+</p>
+<pre class="code">kill -9 число-идентификатор</pre>
+
+<p>
+Нужно узнать размер экрана Клиента. Получаем его по команде:
+</p>
+<pre class="code">xdpyinfo | egrep "(dimensions|resolution)"</pre>
+
+<p>
+Запоминаем.
+</p>
+
+</div>
+
+<h2 class="sectionedit5"><a name="запуск_сервера_и_подключение_клиента" id="запуск_сервера_и_подключение_клиента">Запуск сервера и подключение клиента</a></h2>
+<div class="level2">
+
+</div>
+
+<h3 class="sectionedit6"><a name="на_стороне_сервера" id="на_стороне_сервера">На стороне сервера</a></h3>
+<div class="level3">
+
+<p>
+Запуск VNC сервера на Сервере выполняется командой:
+</p>
+<pre class="code">tightvncserver :1 -geometry 800x600 -dpi 96 -localhost -nolisten tcp :1</pre>
+
+<p>
+Остановка сервера:
+</p>
+<pre class="code">tightvncserver -kill :1</pre>
+
+<p>
+Здесь 800×600 это размер экрана Клиента, а 96 это плотность точек 
+полученная ранее на Сервере. Причём 96 совсем не факт, что хорошее 
+значение. Можно поиграться +/-1 или больше, посмотреть как оно глазам 
+будет комфортнее. Плотность точек в наибольшей степени влияет на 
+отрисовку шрифтов. На размеры окон, линеек в разных программах влияете 
+тоже, но к эргономике это имеет куда меньше отношения. Скорее всего есть
+ минимум два значения: 1) когда на экране отличное изображение и размеры
+ близки к реальным, 2) когда размеры мелки, но шрифты легко читаемы. Не 
+исключено, что это может быть интересно для ультра малых экранов 
+Клиента.
+</p>
+
+<p>
+800×600 можно заменить на уместную величину. Обычно - чуть меньше размера экрана клиента.
+</p>
+
+<p>
+Обозначение ':1' это системный идентификатор виртуального экрана. 
+Вероятно, имеет смысл выбирать его большим. Во всяком случае, на 
+Сервере, в момент запуска VNC службы, не должно быть других виртуальных 
+экранов с этим номером. Номера идут от 0 для локального пользователя. 
+Потом выделяются по мере надобности. В случае использования локального 
+переключения пользователей единица может оказаться занятой. Можно 
+выбрать следующий номер. Использованные номера можно увидеть в выводе 
+команды:
+</p>
+<pre class="code">ls -a /tmp/.X*-lock /tmp/.X11-unix/X*</pre>
+
+</div>
+
+<h3 class="sectionedit7"><a name="на_стороне_клиента" id="на_стороне_клиента">На стороне клиента</a></h3>
+<div class="level3">
+
+<p>
+Подключение со стороны клиента происходит в два этапа. Сначала создаётся туннель:
+</p>
+<pre class="code">ssh -L 12345:localhost:5901 username@hostserver</pre>
+
+<p>
+Потом инициируется подключение к виртуальному экрану:
+</p>
+<pre class="code">vncviewer  -passwd "${HOME}/.vnc/passwd.username.hostserver" localhost:12345</pre>
+
+<p>
+Если ошибок не было, то появится окно соответствующее отдельному 
+виртуальному экрану Сервера. Внизу будет 'fbpanel', обычное меню для 
+запуска программ и т.п.
+</p>
+
+<p>
+Со стороны Клиента VNC сервер можно удалённо стартовать в одну команду:
+</p>
+<pre class="code">ssh username@hostserver "tightvncserver :1 -geometry 800x600 -dpi 96 -nevershared -localhost -nolisten tcp :1" &amp;&amp; ssh -L 12345:localhost:5901 username@hostserver</pre>
+
+<p>
+Останавливать:
+</p>
+<pre class="code">ssh username@hostserver "tightvncserver -kill :1"</pre>
+
+<p>
+В файле '~/.bash_aliases' можно описать короткие синонимы этих команд:
+</p>
+<pre class="code file bash"><span class="kw3">alias</span> vncstart-username-hostserver=<span class="st_h">'ssh username@hostserver "tightvncserver :1 -geometry 800x600 -dpi 96 -nevershared -localhost -nolisten tcp :1" &amp;&amp; ssh -L 12345:localhost:5901 username@hostserver'</span>
+<span class="kw3">alias</span> vncclose-username-hostserver=<span class="st_h">'ssh username@hostserver "tightvncserver -kill :1"'</span>
+<span class="kw3">alias</span> vncconnect-username-hostserver=<span class="st_h">'vncviewer localhost:12345 &amp;'</span></pre>
+
+<p>
+При использовании '~/.bash_aliases' надо в файле '~/.bashrc' найти 
+секцию отвечающую за синонимы и снять в ней комментарии. В итоге секция 
+должна выглядеть так:
+</p>
+<pre class="code file bash"><span class="co0"># Alias definitions.</span>
+<span class="co0"># You may want to put all your additions into a separate file like</span>
+<span class="co0"># ~/.bash_aliases, instead of adding them here directly.</span>
+<span class="co0"># See /usr/share/doc/bash-doc/examples in the bash-doc package.</span>
+&nbsp;
+<span class="kw1">if</span> <span class="br0">[</span> <span class="re5">-f</span> ~<span class="sy0">/</span>.bash_aliases <span class="br0">]</span>; <span class="kw1">then</span>
+    . ~<span class="sy0">/</span>.bash_aliases
+<span class="kw1">fi</span></pre>
+
+</div>
+
+<h2 class="sectionedit8"><a name="как_запускать_программы" id="как_запускать_программы">Как запускать программы</a></h2>
+<div class="level2">
+
+<p>
+На Клиенте, в окне с виртуальным экраном есть все стандартные средства 
+запуска программ в графической среде - кнопки запуска в панели, 
+терминал. Однако, если запускать просто так, то вся обработка трёхмерных
+ инструкций отрисовки будет выполнятся мощностями Клиента. 3D вычисления
+ можно перенести от Клиента на мощности любого сервера программой 
+VirtualGL.
+</p>
+
+<p>
+По состоянию на февраль 2013 года невозможна простая и 
+автоматизированная настройка VirtualGL (утилита vglserver_config) в 
+сочетании с LightDM, <a href="#problema_s_virtualgl_i_lightdm" title="wiki:tightvnc-ssh-terminal-server ↵" class="wikilink1">см. в приложении</a>. Это случай Ubuntu после 2011 года. После замены LightDM на GDM, например, обычные инструкции оказываются работоспособны.
+</p>
+
+<p>
+Пакеты для инсталляции есть в официальных репозиториях. Можно взять по ссылке - <a href="http://www.virtualgl.org/Downloads/VirtualGL" class="urlextern" title="http://www.virtualgl.org/Downloads/VirtualGL" rel="nofollow">www.virtualgl.org</a> и установить. Я скачивал по ссылке и устанавливал, не факт, что это оптимальный выбор.
+</p>
+
+<p>
+Программы на Сервере запускаются так:
+</p>
+<pre class="code">vglrun имя-программы</pre>
+
+<p>
+Например:
+</p>
+<pre class="code">vglrun blender
+vglrun -d $DISPLAY imagination</pre>
+
+<p>
+В таком случае 3D обработка происходит на Сервере. Параметр '-d 
+$DISPLAY' иногда нужно указывать. Возможно, необходимость зависит от 
+сочетаний настроек в разных дистрибутивах и от версий программ.
+</p>
+
+<p>
+Удобно иметь отдельные панели задач для VNC сессии. Для чего, в т.ч., 
+нужна 'fbpanel', как отдельная панель - в ней настраиваются кнопки и 
+меню, запускающие нужное в нужном режиме.
+</p>
+
+<p>
+Тот же самый трюк пригоден для применения в случае использования X-forwarding в <acronym title="Secure Shell">SSH</acronym>.
+ Причём запускать можно не программы поштучно, а сразу - FB панель. 
+Однако, в случае X-forwarding, при отключении все программы будут 
+закрыты, в сравнении с VNC. Но в отношении <acronym title="Secure Shell">SSH</acronym> работа ведётся - <a href="http://mosh.mit.edu/" class="urlextern" title="http://mosh.mit.edu" rel="nofollow">http://mosh.mit.edu</a>
+</p>
+
+</div>
+
+<h2 class="sectionedit9"><a name="какую_сессию_запускать" id="какую_сессию_запускать">Какую сессию запускать</a></h2>
+<div class="level2">
+
+<p>
+В LUbuntu можно запустить LX сессию, со всеми настройками и фичами как 
+есть. Можно запустить OpenBox сессию с 'fbpanel' вместо 'lxpanel'. Выше 
+упомянутый скрипт '~/.vnc/xstartup' запускает ту или иную сессию. В 
+скрипте есть строка:
+</p>
+<pre class="code bash"><span class="kw3">declare</span> <span class="re5">-r</span> <span class="re2">sessionId</span>=<span class="st0">"OPENBOX"</span></pre>
+
+<p>
+Эта строка определяет, что при входе через VNC будет запускаться 
+OpenBox. Можно заменить «OPENBOX» на «LUBUNTU» - будет запускаться LXDE 
+со всеми фичами LUbuntu.
+</p>
+
+<p>
+Есть заковыка - пока открыта единственная LX сессия (VNC или локальная 
+для Сервера) - всё хорошо. Но если запущено две LX сессии, то LX панель 
+сильно сбоит. Я думаю это всё легко настраивается, но это отдельная 
+тема. Которая специфична для LXDE, а в Gnome или KDE будут другие 
+приёмы. Потому сделан тупой ход - запускать совсем другую сессию: 
+легковесную, с другими панелями - OpenBox + Fbpanel.
+</p>
+
+<p>
+Кстати, для продвинутых, можно для FB панели сделать кнопку для 
+переключения режима «скрывать автоматически». Скриптуется подмена 
+значения в конфигурации панели и перезапуск панели. Выглядит как: нажал 
+кнопку панель стала прячущейся, нажал второй раз - панель постоянно 
+видна. В сочетании с «быстренько» подключился-отключился по VNC - 
+удобно. Если на Клиенте используется LUbuntu, то LX панель можно 
+настроить «скрывать автоматически», пристроить её в углу и каким-либо 
+полезным содержимым, типа регулировки громкости и дополнительного меню 
+запуска любимых программ, а основной панелью сделать FB панель. 
+Подробнее см. <a href="http://help.ubuntu.ru/wiki/fbpanel" class="wikilink2" title="wiki:fbpanel" rel="nofollow">Fbpanel для удалённной работы с GUI приложениями...</a>
+</p>
+
+</div>
+
+<h2 class="sectionedit10"><a name="запуск_в_полный_экран_без_потери_связи_с_локальной_панелью_клиента" id="запуск_в_полный_экран_без_потери_связи_с_локальной_панелью_клиента">Запуск в полный экран без потери связи с локальной панелью клиента</a></h2>
+<div class="level2">
+
+<p>
+VNC-клиенты позволяют запускать виртуальный экран во весь дисплей, но 
+тогда нельзя без прикосновений к клавиатуре переключаться между 
+удалённым виртуальным экраном и окнами существующими на экране Клиента. В
+ режиме «не разворачивать на весь экран» обычные VNC-клиенты имеют 
+заголовок окна, меню - на них уходит чувствительно много места. Утилита 
+'devilspie' в сочетании с 'vncviewer' позволяют отыграть максимум места,
+ сохраняя возможность не касаясь клавиатуры мышкой переключаться между 
+локальными и удалёнными окнами. Здесь же начинает играть заметную роль 
+возможность быстро переключать локальную панель задач Клиента в режим 
+«скрывать автоматически», что является преимуществом для 'fbpanel' перед
+ 'lxpanel'.
+</p>
+
+<p>
+Утилита 'devilspie' позволяет манипулировать окнами, их обрамлением. 
+Можно для Клиента убрать обрамление окна с виртуальным экраном и выбрать
+ значение параметра запуска VNC сервера такое, что окно с виртуальным, 
+удалённым экраном аккуратно впишется в свободное пространство на 
+«рабочем столе». При этом сохраняется возможность перемещения этого окна
+ - нажать Alt+пробел и перемешать стрелками курсора, конец перемещения -
+ кнопка Enter. Система запоминает положение окна, при следующих запусках
+ окно будет там же, где было перед выключением.
+</p>
+
+<p>
+Утилита 'devilspie' должна быть предварительно запущена: в автозапуск - в
+ каталог '~/.config/autostart' -  добавляется файл 
+'devilspie-start.desktop'.
+Содержимое файла:
+</p>
+<dl class="file">
+<dt><a href="http://help.ubuntu.ru/_export/code/wiki/tightvnc-ssh-terminal-server?codeblock=27" title="Скачать код" class="mediafile mf_desktop">~/.config/autostart/devilspie-start.desktop</a></dt>
+<dd><pre class="code file xorg_conf"><span class="br0">[</span>Desktop Entry<span class="br0">]</span>
+Type=Application
+Name=Devilspie starter
+Exec=devilspie -a</pre>
+</dd></dl>
+
+<p>
+Требуется выход-вход в систему или перезагрузка, чтобы запущенная 
+'devilspie' начала обрабатывать указанные ей окна. Или достаточно руками
+ перезапустить саму утилиту:
+</p>
+<pre class="code">killall -9 devilspie ; nohup devilspie -a 1&gt;/dev/null 2&gt;/dev/null &amp;</pre>
+
+<p>
+Окна для обработки 'devilspie' выбирает согласно своим конфигурационным 
+файлам. Например, для окна с заголовком «TightVNC: userName's X desktop 
+(hostName:1)» в каталоге '~/.devilspie/' нужно поместить файл 
+'xVNCviewer-window.ds' c содержимым:
+</p>
+<dl class="file">
+<dt><a href="http://help.ubuntu.ru/_export/code/wiki/tightvnc-ssh-terminal-server?codeblock=29" title="Скачать код" class="mediafile mf_ds">~/.devilspie/xVNCviewer-window.ds</a></dt>
+<dd><pre class="code file xorg_conf">; generated_rule xVNCviewer-window
+; Ниже регулярное выражение:        ^TightVNC: <span class="br0">[</span>a-zA-Z0-<span class="nu0">9</span><span class="br0">]</span>+<span class="br0">[</span>'<span class="br0">]</span><span class="br0">{</span><span class="nu0">1</span><span class="br0">}</span>s X desktop <span class="br0">[</span><span class="br0">(</span><span class="br0">]</span><span class="br0">{</span><span class="nu0">1</span><span class="br0">}</span><span class="br0">[</span>a-zA-Z0-<span class="nu0">9</span>:<span class="br0">]</span>+<span class="br0">[</span><span class="br0">)</span><span class="br0">]</span><span class="br0">{</span><span class="nu0">1</span><span class="br0">}</span>$
+; соответствует реальной сроке:     TightVNC: userName's X desktop <span class="br0">(</span>hostName:<span class="nu0">1</span><span class="br0">)</span>
+<span class="br0">(</span> if
+<span class="br0">(</span> begin
+<span class="br0">(</span> matches <span class="br0">(</span>window_class <span class="br0">)</span> <span class="st0">"^TightVNC: [a-zA-Z0-9]+[']{1}s X desktop [(]{1}[a-zA-Z0-9:]+[)]{1}$"</span> <span class="br0">)</span>
+<span class="br0">(</span> matches <span class="br0">(</span>application_name <span class="br0">)</span> <span class="st0">"^TightVNC: [a-zA-Z0-9]+[']{1}s X desktop [(]{1}[a-zA-Z0-9:]+[)]{1}$"</span> <span class="br0">)</span>
+<span class="br0">(</span> matches <span class="br0">(</span>window_name<span class="br0">)</span> <span class="st0">"^TightVNC: [a-zA-Z0-9]+[']{1}s X desktop [(]{1}[a-zA-Z0-9:]+[)]{1}$"</span> <span class="br0">)</span>
+<span class="br0">)</span>
+<span class="br0">(</span> begin
+<span class="br0">(</span> undecorate <span class="br0">)</span>
+<span class="br0">(</span> geometry <span class="st0">"+2+2"</span> <span class="br0">)</span>
+<span class="br0">(</span> println <span class="st0">"match"</span> <span class="br0">)</span>
+<span class="br0">)</span>
+<span class="br0">)</span></pre>
+</dd></dl>
+
+<p>
+Эта конфигурация приводит к удалению обрамления соответствующего окна. 
+Есть утилита 'gdevilspie' - графический интерфейс для создания этих 
+конфигураций.
+</p>
+
+<p>
+Документация автора на регулярные выражения никакая (та что в man), но в сети можно найти примеры: <a href="http://www.foosel.org/linux/devilspie" class="urlextern" title="http://www.foosel.org/linux/devilspie" rel="nofollow">foosel.org/linux</a>.
+ Здорово, если кто поймёт и напишет сюда какие конкретно регулярные 
+выражения задействованы. Правила рег.выражений рознятся в разных языках 
+программирования и утилитах. Этот диалект я не опознал, вероятно надо 
+лезть в исходные коды и там прямой ответ - по именам функций и названию 
+языка найдётся вся документация.
+</p>
+
+<p>
+Вместо регулярных выражений можно просто вписать в кавычках точную 
+строку-название окна программы. Но тогда придётся создать по набору 
+правил отдельно на каждый возможный заголовок окна…
+</p>
+
+</div>
+
+<h2 class="sectionedit11"><a name="правила_ufw" id="правила_ufw">Правила ufw</a></h2>
+<div class="level2">
+
+<p>
+Для защиты сервера от перебора паролей к <acronym title="Secure Shell">SSH</acronym> и от внешних подключений к VNC серверу полезно применить брандмауэр. Например, 'ufw'. Вот команды для защиты:
+</p>
+<pre class="code">sudo ufw limit 22/tcp
+sudo ufw deny in on eth0 from any to any port 5901
+sudo ufw limit in proto tcp from lo to 127.0.0.1 port 5901
+sudo ufw deny from any to any
+sudo ufw enable</pre>
+
+<p>
+Имя 'eth0' надо заменить на имя вашего сетевого интерфейса. Если 
+интерфейсов много, то для каждого должно быть отдельное правило. Список 
+интерфейсов можно увидеть в выводе команды:
+</p>
+<pre class="code">ip a</pre>
+
+<p>
+Поскольку есть правила с действием 'limit', то вполне легальные, но 
+слишком частые попытки подключиться вызовут временную блокировку Клиента
+ на Сервере. Надо подождать пару минут - автоматически разблокируется. 
+Факты блокировок можно увидеть в фале '/var/log/ufw.log'. Это вполне 
+обыденная защита, не позволяющая вводить пароль чаще единиц раз в 
+минуту. При таком условии подбор сложного пароля или ключа становится 
+нереален.
+</p>
+
+</div>
+
+<h2 class="sectionedit12"><a name="литература" id="литература">Литература</a></h2>
+<div class="level2">
+<ul>
+<li class="level1"><div class="li">
+ Индикатор и переключение раскладки клавиатуры в OpenBox - <a href="http://help.ubuntu.ru/wiki/lubuntu/%D0%B8%D0%BD%D0%B4%D0%B8%D0%BA%D0%B0%D1%82%D0%BE%D1%80_%D0%B8_%D0%BF%D0%B5%D1%80%D0%B5%D0%BA%D0%BB%D1%8E%D1%87%D0%B5%D0%BD%D0%B8%D0%B5_%D1%80%D0%B0%D1%81%D0%BA%D0%BB%D0%B0%D0%B4%D0%BA%D0%B8_%D0%BA%D0%BB%D0%B0%D0%B2%D0%B8%D0%B0%D1%82%D1%83%D1%80%D1%8B_%D0%B2_openbox" class="wikilink1" title="wiki:lubuntu:индикатор_и_переключение_раскладки_клавиатуры_в_openbox">Индикатор и переключение раскладки клавиатуры в OpenBox в FAQ</a>
+</div></li>
+</ul>
+
+<ul>
+<li class="level1"><div class="li">
+ Quick start for LUbuntu - <a href="http://wiki.lxde.org/en/LXPanel#Important_notes" class="urlextern" title="http://wiki.lxde.org/en/LXPanel#Important_notes" rel="nofollow">http://wiki.lxde.org/en/LXPanel#Important_notes</a>
+</div></li>
+<li class="level1"><div class="li">
+ VNC at all - <a href="https://help.ubuntu.com/community/VNC" class="urlextern" title="https://help.ubuntu.com/community/VNC" rel="nofollow">https://help.ubuntu.com/community/VNC</a>
+</div></li>
+<li class="level1"><div class="li">
+ VNC servers - <a href="https://help.ubuntu.com/community/VNC/Servers#Customising_your_session" class="urlextern" title="https://help.ubuntu.com/community/VNC/Servers#Customising_your_session" rel="nofollow">https://help.ubuntu.com/community/VNC/Servers#Customising_your_session</a>
+</div></li>
+<li class="level1"><div class="li">
+ VNC clients - <a href="https://help.ubuntu.com/community/VNC/Clients" class="urlextern" title="https://help.ubuntu.com/community/VNC/Clients" rel="nofollow">https://help.ubuntu.com/community/VNC/Clients</a>
+</div></li>
+</ul>
+
+
+</div>
+
+<h2 class="sectionedit13"><a name="приложения" id="приложения">Приложения</a></h2>
+<div class="level2">
+
+</div>
+
+<h3 class="sectionedit14"><a name="проблема_с_virtualgl_и_lightdm" id="проблема_с_virtualgl_и_lightdm">Проблема с VirtualGL и LightDM</a></h3>
+<div class="level3">
+
+<p>
+В настоящее время утилита 'vglserver_config' для конфигурации среды 
+VirtualGL сервера не умеет правильно создавать настройки, в случае 
+использования LightDM. Именно это сочетание есть в Ubuntu 12.04 и др. 
+(после 2011 года). (<a href="http://sourceforge.net/projects/virtualgl/files/VirtualGL/2.3.2/" class="urlextern" title="http://sourceforge.net/projects/virtualgl/files/VirtualGL/2.3.2/" rel="nofollow"> Исправлено</a>  в версии VirtualGL 2.3.2:
+vglserver_config should now work properly with LightDM.)
+</p>
+
+<p>
+Типичный вывод утилит в консоли:
+</p>
+<pre class="code">user@host $ glxinfo
+...
+Xlib:  extension "GLX" missing on display "localhost:10.0".
+...
+user@host $ vglrun glxinfo   
+[VGL] NOTICE: Automatically setting VGL_CLIENT environment variable to
+[VGL]    192.168.0.3, the IP address of your SSh client.
+No protocol specified
+No protocol specified
+[VGL] ERROR: Could not open display :0.</pre>
+
+<p>
+Это поправимо, надо заменить LightDM на что ещё. GDM как замена - 
+неплохой выбор. Для замены останавливается сервис 'lightdm', 
+инсталлируется 'gdm', запускается сервис 'gdm', выполняется 'sudo 
+vglserver_config'. В процессе установки 'gdm' будет предложено выбрать, 
+что использовать: LightDM или GDM. Надо выбрать GDM.
+</p>
+
+<p>
+Более подробные инструкции выходят за рамки этой статьи. Предлагаю использовать, как источник информации, публикацию <a href="http://sourceforge.net/tracker/?func=detail&amp;aid=3543408&amp;group_id=117509&amp;atid=678327" class="urlextern" title="http://sourceforge.net/tracker/?func=detail&amp;aid=3543408&amp;group_id=117509&amp;atid=678327" rel="nofollow">http://sourceforge.net/tracker/?func=detail&amp;aid=3543408&amp;group_id=117509&amp;atid=678327</a>
+</p>
+
+<p>
+Нужно предупредить. Настройка внешнего вида GDM выполняется просто, но 
+только если заранее знать как. Для LUbuntu почти рабочее решение для 
+замены фоновой картинки описано тут: <a href="http://smashingweb.info/change-the-background-of-gnome-3-gdm-login-screen/" class="urlextern" title="http://smashingweb.info/change-the-background-of-gnome-3-gdm-login-screen/" rel="nofollow">http://smashingweb.info/change-the-background-of-gnome-3-gdm-login-screen/</a>
+ В процессе будут сообщения об отсутствии прав доступа к каталогам - да,
+ для пользователя 'gdm' нужно разрешить доступ к этим файлам, чтение и 
+запись.  Есть другие способы, но они часто расчитаны на графические 
+инструменты полновесного Gnome, требуют компонент Gnome, которые в 
+LUbuntu отсутствуют.
+</p>
+
+<p>
+Ещё одно предупреждение: ошибки при замене LightDM на что-то ещё, ошибки
+ в вообще настройке display manager могут привести к временной потере 
+автоматического запуска графической среды. Тренируйтесь в виртуальных 
+машинах, если есть неуверенность в результате.
+</p>
+
+</div>
+
+<h3 class="sectionedit15"><a name="файл_конфигурации_fbpanel" id="файл_конфигурации_fbpanel">Файл конфигурации Fbpanel</a></h3>
+<div class="level3">
+<dl class="file">
+<dt><a href="http://help.ubuntu.ru/_export/code/wiki/tightvnc-ssh-terminal-server?codeblock=33" title="Скачать код" class="mediafile mf_conf">~/.config/fbpanel/vnc-fbpanel.conf</a></dt>
+<dd><pre class="code file xorg_conf">Global <span class="br0">{</span>
+    edge = bottom
+    allign = center
+    margin = <span class="nu0">0</span>
+    widthtype = percent
+    width = <span class="nu0">100</span>
+    height = <span class="nu0">48</span>
+    transparent = true
+    tintcolor = <span class="co1">#0e0e0e</span>
+    alpha = <span class="nu0">150</span>
+    setdocktype = true
+    setpartialstrut = true
+    autohide = false
+    heightWhenHidden = <span class="nu0">2</span>
+    roundcorners = false
+    roundcornersradius = <span class="nu0">7</span>
+    layer = none
+    MaxElemHeight = <span class="nu0">24</span>
+<span class="br0">}</span>
+Plugin <span class="br0">{</span>
+    type = space
+    config <span class="br0">{</span>
+        size = <span class="nu0">2</span>
+    <span class="br0">}</span>
+<span class="br0">}</span>
+Plugin <span class="br0">{</span>
+    type = menu
+    config <span class="br0">{</span>
+        IconSize = <span class="nu0">22</span>
+        icon = start-here
+        systemmenu <span class="br0">{</span>
+        <span class="br0">}</span>
+        separator <span class="br0">{</span>
+        <span class="br0">}</span>
+        menu <span class="br0">{</span>
+            name = Computer
+            icon = computer
+            item <span class="br0">{</span>
+                name = Terminal
+                icon = terminal
+                action = lxterminal
+            <span class="br0">}</span>
+            item <span class="br0">{</span>
+                name = Lock Display
+                icon = gnome-lockscreen
+                action = xscreensaver-command -lock
+            <span class="br0">}</span>
+            item <span class="br0">{</span>
+                name = Suspend
+                icon = xfpm-suspend
+                <span class="co1">#action = </span>
+                action = zenity --info --text <span class="st0">"This command is blocked in panel for VNC session."</span>
+            <span class="br0">}</span>
+            item <span class="br0">{</span>
+                name = Hibernate
+                icon = xfpm-hibernate
+                <span class="co1">#action = </span>
+                action = zenity --info --text <span class="st0">"This command is blocked in panel for VNC session."</span>
+            <span class="br0">}</span>
+            separator <span class="br0">{</span>
+            <span class="br0">}</span>
+            item <span class="br0">{</span>
+                name = Reboot
+                icon = gnome-session-reboot
+                <span class="co1">#action = </span>
+                action = zenity --info --text <span class="st0">"This command is blocked in panel for VNC session."</span>
+            <span class="br0">}</span>
+            item <span class="br0">{</span>
+                name = Shutdown
+                icon = gnome-session-halt
+                <span class="co1">#action = </span>
+                action = zenity --info --text <span class="st0">"This command is blocked in panel for VNC session."</span>
+            <span class="br0">}</span>
+            separator <span class="br0">{</span>
+            <span class="br0">}</span>
+            item <span class="br0">{</span>
+                name = Logout
+                icon = gnome-session-logout
+                <span class="co1">#action = /bin/bash -c "sync &amp;&amp; openbox --exit"</span>
+                <span class="co1">#action = lxsession-logout</span>
+                action = zenity --info --text <span class="st0">"This command is blocked in panel for VNC session."</span>
+            <span class="br0">}</span>
+        <span class="br0">}</span>
+    <span class="br0">}</span>
+<span class="br0">}</span>
+Plugin <span class="br0">{</span>
+    type = space
+    config <span class="br0">{</span>
+        size = <span class="nu0">5</span>
+    <span class="br0">}</span>
+<span class="br0">}</span>
+Plugin <span class="br0">{</span>
+    type = launchbar
+    config <span class="br0">{</span>
+        button <span class="br0">{</span>
+            icon = terminal
+            tooltip = Terminal
+            action = lxterminal
+        <span class="br0">}</span>
+        button <span class="br0">{</span>
+            icon = system-file-manager
+            tooltip = PCManFM file manager
+            action = pcmanfm
+        <span class="br0">}</span>
+    <span class="br0">}</span>
+<span class="br0">}</span>
+Plugin <span class="br0">{</span>
+    type = space
+    config <span class="br0">{</span>
+        size = <span class="nu0">5</span>
+    <span class="br0">}</span>
+<span class="br0">}</span>
+Plugin <span class="br0">{</span>
+    type = taskbar
+    expand = true
+    config <span class="br0">{</span>
+        ShowIconified = true
+        ShowMapped = true
+        ShowAllDesks = false
+        tooltips = true
+        IconsOnly = false
+        MaxTaskWidth = <span class="nu0">300</span>
+    <span class="br0">}</span>
+<span class="br0">}</span>
+Plugin <span class="br0">{</span>
+    type = space
+    config <span class="br0">{</span>
+        size = <span class="nu0">15</span>
+    <span class="br0">}</span>
+<span class="br0">}</span>
+Plugin <span class="br0">{</span>
+    type = wincmd
+    config <span class="br0">{</span>
+        icon = gnome-fs-desktop
+        tooltip = Left click to iconify all windows. Middle click to shade them.
+    <span class="br0">}</span>
+<span class="br0">}</span>
+Plugin <span class="br0">{</span>
+    type = pager
+    config <span class="br0">{</span>
+        showwallpaper = true
+    <span class="br0">}</span>
+<span class="br0">}</span>
+Plugin <span class="br0">{</span>
+    type = space
+    config <span class="br0">{</span>
+        size = <span class="nu0">2</span>
+    <span class="br0">}</span>
+<span class="br0">}</span>
+Plugin <span class="br0">{</span>
+    type = mem
+    expand = false
+    padding = <span class="nu0">2</span>
+    config <span class="br0">{</span>
+        ShowSwap = false
+    <span class="br0">}</span>
+<span class="br0">}</span>
+Plugin <span class="br0">{</span>
+    type = space
+    config <span class="br0">{</span>
+        size = <span class="nu0">2</span>
+    <span class="br0">}</span>
+<span class="br0">}</span>
+Plugin <span class="br0">{</span>
+    type = cpu
+    config <span class="br0">{</span>
+        Color = green
+    <span class="br0">}</span>
+<span class="br0">}</span>
+Plugin <span class="br0">{</span>
+    type = space
+    config <span class="br0">{</span>
+        size = <span class="nu0">3</span>
+    <span class="br0">}</span>
+<span class="br0">}</span>
+Plugin <span class="br0">{</span>
+    type = tray
+<span class="br0">}</span>
+Plugin <span class="br0">{</span>
+    type = space
+    config <span class="br0">{</span>
+        size = <span class="nu0">3</span>
+    <span class="br0">}</span>
+<span class="br0">}</span>
+Plugin <span class="br0">{</span>
+    type = tclock
+    config <span class="br0">{</span>
+        ClockFmt = &lt;span font=<span class="st0">"Ubuntu Condensed 18"</span> color=<span class="st0">"#ffffff"</span>&gt;&lt;b&gt;%H:%M&lt;/b&gt;&lt;/span&gt;&amp;<span class="co1">#xA;&lt;span font="Ubuntu Condensed 12" color="#ffffff"&gt;%a/%d&lt;/span&gt;</span>
+        TooltipFmt = %A %x
+        Action = xmessage Please define some command &amp;
+        ShowCalendar = true
+        ShowTooltip = true
+    <span class="br0">}</span>
+<span class="br0">}</span>
+Plugin <span class="br0">{</span>
+     type = space
+     config <span class="br0">{</span>
+          size = <span class="nu0">1</span>
+     <span class="br0">}</span>
+<span class="br0">}</span></pre>
+</dd></dl>
+
+</div>
+
+<h3 class="sectionedit16"><a name="файл_запуска_графической_сессии" id="файл_запуска_графической_сессии">Файл запуска графической сессии</a></h3>
+<div class="level3">
+<dl class="file">
+<dt><a href="http://help.ubuntu.ru/_export/code/wiki/tightvnc-ssh-terminal-server?codeblock=34" title="Скачать код" class="mediafile mf_vnc_xstartup">bash ~/.vnc/xstartup</a></dt>
+<dd><pre class="code file bash"><span class="co0">#!/bin/bash</span>
+&nbsp;
+<span class="co0"># Put this content into ~/.vnc/xstartup</span>
+<span class="co0"># Do chmod +x ~/.vnc/xstartup</span>
+&nbsp;
+<span class="kw3">declare</span> <span class="re5">-r</span> <span class="re2">sessionId</span>=<span class="st0">"OPENBOX"</span>
+&nbsp;
+<span class="co0">#Uncommment this line if using Gnome and your keyboard mappings are incorrect.</span>
+<span class="co0">#export XKL_XMODMAP_DISABLE=1</span>
+&nbsp;
+<span class="co0"># Здесь принудительно определяются настройки локализации.</span>
+<span class="co0"># Предпочитаемый язык для приложений, язык для сообщений,</span>
+<span class="co0"># национальный формат даты, способы сортировки и др.</span>
+<span class="co0"># Эти праметры влияют на возможность ввода символов национального</span>
+<span class="co0"># алфавита - т.е. на русском. См. 'man locale' и по ссылкам оттуда.</span>
+<span class="kw3">export</span> <span class="re2">LANG</span>=en_US.UTF-<span class="nu0">8</span>
+<span class="kw3">export</span> <span class="re2">LC_CTYPE</span>=<span class="st0">"ru_RU.UTF-8"</span>
+<span class="kw3">export</span> <span class="re2">LC_NUMERIC</span>=<span class="st0">"ru_RU.UTF-8"</span>
+<span class="kw3">export</span> <span class="re2">LC_TIME</span>=<span class="st0">"ru_RU.UTF-8"</span>
+<span class="kw3">export</span> <span class="re2">LC_COLLATE</span>=C
+<span class="kw3">export</span> <span class="re2">LC_MONETARY</span>=<span class="st0">"ru_RU.UTF-8"</span>
+<span class="kw3">export</span> <span class="re2">LC_MESSAGES</span>=<span class="st0">"en_US.UTF-8"</span>
+<span class="kw3">export</span> <span class="re2">LC_PAPER</span>=<span class="st0">"ru_RU.UTF-8"</span>
+<span class="kw3">export</span> <span class="re2">LC_NAME</span>=<span class="st0">"ru_RU.UTF-8"</span>
+<span class="kw3">export</span> <span class="re2">LC_ADDRESS</span>=<span class="st0">"ru_RU.UTF-8"</span>
+<span class="kw3">export</span> <span class="re2">LC_TELEPHONE</span>=<span class="st0">"ru_RU.UTF-8"</span>
+<span class="kw3">export</span> <span class="re2">LC_MEASUREMENT</span>=<span class="st0">"ru_RU.UTF-8"</span>
+<span class="kw3">export</span> <span class="re2">LC_IDENTIFICATION</span>=<span class="st0">"ru_RU.UTF-8"</span>
+<span class="kw3">export</span> <span class="re2">LC_ALL</span>=
+&nbsp;
+<span class="co0"># Здесь можно задать прочие переменные окружения:</span>
+<span class="kw3">export</span> <span class="re2">BROWSER</span>=firefox
+&nbsp;
+<span class="co0"># Load X resources (if any)</span>
+<span class="br0">[</span> <span class="re5">-e</span> <span class="st0">"<span class="es3">${HOME}</span>/.Xresources"</span> <span class="br0">]</span> \
+    <span class="sy0">&amp;&amp;</span> xrdb <span class="st0">"<span class="es3">${HOME}</span>/.Xresources"</span>
+&nbsp;
+<span class="kw1">case</span> <span class="st0">"<span class="es3">${sessionId}</span>"</span> <span class="kw1">in</span>
+OPENBOX<span class="br0">)</span>
+    <span class="kw1">if</span> <span class="kw2">which</span> openbox-session <span class="sy0">&gt;/</span>dev<span class="sy0">/</span>null ; <span class="kw1">then</span>
+        <span class="kw2">ssh-agent</span> openbox-session <span class="sy0">&amp;</span>
+    <span class="kw1">fi</span>
+    <span class="kw3">break</span>
+<span class="sy0">;;</span>
+LUBUNTU<span class="br0">)</span>
+    <span class="kw1">if</span> <span class="kw2">which</span> startlubuntu <span class="sy0">&gt;/</span>dev<span class="sy0">/</span>null ; <span class="kw1">then</span>
+        <span class="kw2">ssh-agent</span> startlubuntu <span class="sy0">&amp;</span>
+    <span class="kw1">fi</span>
+    <span class="kw3">break</span>
+<span class="sy0">;;</span>
+GENERIC<span class="br0">)</span>
+    xsetroot <span class="re5">-solid</span> <span class="st0">"#DBB183"</span>
+    x-terminal-emulator <span class="re5">-geometry</span> <span class="st0">"80x24+10+10"</span> <span class="re5">-ls</span> <span class="re5">-title</span> <span class="st0">"VNCDESKTOP"</span> <span class="sy0">&amp;</span>
+    x-window-manager <span class="sy0">&amp;</span>
+    <span class="kw3">break</span>
+<span class="sy0">;;</span>
+<span class="kw1">esac</span></pre>
+</dd></dl>
+
+</div>
+
+<h2 class="sectionedit17"><a name="ссылки" id="ссылки">Ссылки</a></h2>
+<div class="level2">
+<ul>
+<li class="level1"><div class="li">
+ <a href="http://help.ubuntu.ru/wiki/fixme" class="wikilink1" title="wiki:fixme">FIXME</a>
+</div></li>
+</ul>
+
+<div class="tags"><span>
+	<a href="http://help.ubuntu.ru/tag/tightvnc-ssh-terminal-server?do=showtag&amp;tag=tightvnc-ssh-terminal-server" class="wikilink1" title="tag:tightvnc-ssh-terminal-server" rel="tag">tightvnc-ssh-terminal-server</a>
+</span></div>
+
+</div>
+
+							<div class="clearer"></div>
+						</div>
+					</div>
+					<div class="clearer"></div>
+				</div>
+						<!-- /Main -->
+		</div></div>
+		<!-- Footer -->
+		<div id="__site-footer">
+	<ul>
+		<li><a href="http://ubuntu.ru/" title="Главная страница сайта ubuntu.ru">Сайт</a></li>
+		<li><a href="http://ubuntu.ru/about" title="Описание и особенности дистрибутива Ubuntu">Об Ubuntu</a></li>
+		<li><a href="http://ubuntu.ru/get" title="Страница получения дистрибутива Ubuntu">Скачать Ubuntu</a></li>
+		<li><a href="http://ubuntu.ru/family" title="Список дистрибутивов, входящих в большое семейство Ubuntu">Семейство Ubuntu</a></li>
+		<li><a href="http://ubuntu.ru/news" title="Новости русскоязычного сообщества Ubuntu">Новости</a></li>
+	</ul>
+	<ul>
+		<li><a href="http://forum.ubuntu.ru/" title="Форум русскоязычного сообщества Ubuntu. На нём вы можете задать интересующие вас вопросы и получить помощь от других пользователей Ubuntu.">Форум</a></li>
+		<li><a href="http://forum.ubuntu.ru/index.php?action=help" title="Помощь по использованию форума">Помощь</a></li>
+		<li><a href="http://forum.ubuntu.ru/index.php?action=rules" title="Правила пользования форумом русскоязычного сообщества Ubuntu">Правила</a></li>
+	</ul>
+	<ul>
+		<li><a href="http://help.ubuntu.ru/" title="Различная русскоязычная документация по семейству операционных систем на базе Ubuntu">Документация</a></li>
+		<li><a href="http://help.ubuntu.ru/wiki" title="Документация, создаваемая пользователями Ubuntu" class="active">Пользовательская документация</a></li>
+		<li><a href="http://help.ubuntu.ru/doc" title="Переводы официальной документации по Ubuntu на русский язык">Официальная документация</a></li>
+		<li><a href="http://help.ubuntu.ru/wiki/%D1%81%D0%B5%D0%BC%D0%B5%D0%B9%D1%81%D1%82%D0%B2%D0%BE_ubuntu" title="Документация по дистрибутивам, входящим в семейство Ubuntu">Семейство Ubuntu</a></li>
+		<li><a href="http://help.ubuntu.ru/wiki/%D1%80%D1%83%D0%BA%D0%BE%D0%B2%D0%BE%D0%B4%D1%81%D1%82%D0%B2%D0%B0" title="Различные материалы по Ubuntu, доступные для загрузки">Материалы для загрузки</a></li>
+		<li><a href="http://help.ubuntu.ru/wiki/%D1%81%D0%BE%D0%B2%D0%BC%D0%B5%D1%81%D1%82%D0%B8%D0%BC%D0%BE%D1%81%D1%82%D1%8C" title="Раздел, посвящённый совместимости Ubuntu с оборудованием, в первую очередь - с ноутбуками">Совместимость с оборудованием</a></li>
+		<li><a href="http://help.ubuntu.ru/feed.php" title="Позволяет подписаться на обновления посредством RSS" class="rss-feed">RSS лента</a></li>
+	</ul>
+	<ul>
+		<li><a href="http://team.ubuntu.ru/" title="Материалы, касающиеся работы русскоязычного сообщества и русскоязычной LoCo команды Ubuntu">Сообщество</a></li>
+		<li><a href="http://team.ubuntu.ru/projects" title="Проекты русскоязычного сообщества Ubuntu">Наши проекты</a></li>
+		<li><a href="http://team.ubuntu.ru/loco" title="Раздел, посвящённый местным сообществам Ubuntu (LoCo) в различных городах и областях">Местные сообщества</a></li>
+		<li><a href="http://team.ubuntu.ru/translate" title="Раздел, посвящённый переводу Ubuntu на русский язык">Перевод Ubuntu</a></li>
+		<li><a href="http://team.ubuntu.ru/qa" title="Тестирование новых версий Ubuntu">Тестирование</a></li>
+		<li><a href="http://team.ubuntu.ru/feed.php" title="Позволяет подписаться на обновления посредством RSS" class="rss-feed">RSS лента</a></li>
+	</ul>
+	<p>
+		© 2012 Ubuntu-ru — Русскоязычное сообщество Ubuntu Linux.<br>
+		© 2012 Canonical Ltd. Ubuntu и Canonical являются зарегистрированными торговыми знаками Canonical Ltd.
+	</p>
+	<div class="besthosting">
+		<a href="http://www.best-hosting.ru/dedicated_server.asp" title="Хостинг предоставлен компанией Best Hosting">
+			<img src="Tightvnc-ssh-terminal-server_files/bhlogo.png" alt="Best Hosting">
+		</a><br>
+		<a href="http://www.best-hosting.ru/dedicated_server.asp">Серверы на Ubuntu</a>
+	</div>
+	<a href="http://ubuntu.ru/" title="На главную страницу сайта">
+		<img src="Tightvnc-ssh-terminal-server_files/footer_logo_ru.png" alt="">
+	</a>
+	<div class="clearer"></div>
+</div>
+		<!-- /Footer -->
+	</div>
+	<div class="no"><img src="Tightvnc-ssh-terminal-server_files/indexer.gif" alt="" height="1" width="2"></div>
+	<!-- /Page -->
+</div>
+<!-- /Document -->
+<!-- Control -->
+	<div id="__control" class="pinned-down">
+		<ul>
+			<li><a href="http://help.ubuntu.ru/wiki/tightvnc-ssh-terminal-server?do=edit&amp;rev=" class="action source" accesskey="v" rel="nofollow" title="Показать исходный текст [V]">Показать исходный текст</a></li>
+			<li><a href="http://help.ubuntu.ru/wiki/tightvnc-ssh-terminal-server?do=revisions" class="action revs" accesskey="o" rel="nofollow" title="История страницы [O]">История страницы</a></li>
+			<li></li>
+			<li><a href="http://help.ubuntu.ru/wiki/tightvnc-ssh-terminal-server?do=backlink" class="action backlink" rel="nofollow" title="Ссылки сюда">Ссылки сюда</a></li>
+		</ul>
+		<ul>
+			<li id="__control_toggle">
+							<a href="" title="Закрепить панель">
+					<img src="Tightvnc-ssh-terminal-server_files/remmina-pin-up.png" alt="Закрепить панель">
+				</a>
+						</li>
+			<li></li>
+			<li></li>
+			<li><a href="http://help.ubuntu.ru/wiki/tightvnc-ssh-terminal-server?do=media" class="action media" rel="nofollow" title="Media Manager">Media Manager</a></li>
+			<li></li>
+			<li><a href="http://help.ubuntu.ru/wiki/tightvnc-ssh-terminal-server?do=index" class="action index" accesskey="x" rel="nofollow" title="Все страницы [X]">Все страницы</a></li>
+			<li><a href="http://help.ubuntu.ru/wiki/tightvnc-ssh-terminal-server?do=recent" class="action recent" accesskey="r" rel="nofollow" title="Недавние изменения [R]">Недавние изменения</a></li>
+		</ul>
+		<div class="clearer"></div>
+	</div>
+<!-- /Control -->
+</div>
+
+
+
+</body></html>

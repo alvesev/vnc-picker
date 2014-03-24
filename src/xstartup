@@ -1,0 +1,48 @@
+#!/bin/bash
+
+# Put this content into ~/.vnc/xstartup
+# Do chmod +x ~/.vnc/xstartup
+
+declare -ra possibleSessionIdsSequence=("OPENBOX" "LUBUNTU" "GNOME" "KDE" "GENERIC")
+
+#Uncommment this line if using Gnome and your keyboard mappings are incorrect.
+export XKL_XMODMAP_DISABLE=1
+
+# Load X resources (if any)
+[ -e "${HOME}/.Xresources" ] \
+    && xrdb "${HOME}/.Xresources"
+
+for sessionId in "${possibleSessionIdsSequence[@]}" ; do
+    case "${sessionId}" in
+    OPENBOX)
+        if which openbox-session >/dev/null ; then
+            ssh-agent openbox-session &
+        fi
+        break
+    ;;
+    LUBUNTU)
+        if which openbox-session >/dev/null ; then
+            ssh-agent startlubuntu &
+        fi
+        break
+    ;;
+    GNOME)
+        if which gnome-session >/dev/null ; then
+            gnome-session &
+        fi
+        break
+    ;;
+    KDE)
+        if which startkde >/dev/null ; then
+            startkde &
+        fi
+        break
+    ;;
+    GENERIC)
+        xsetroot -solid "#DAB082"
+        x-terminal-emulator -geometry "80x24+10+10" -ls -title "VNC DESKTOP" &
+        x-window-manager &
+        break
+    ;;
+    esac
+done
