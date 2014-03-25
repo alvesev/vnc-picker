@@ -8,7 +8,7 @@ Homepage: https://github.com/alvesev
 
 Package: vnc-picker
 Architecture: all
-Depends: bash, dialog, vncviewer, openssh-client
+Depends: bash, dialog, python3, vncviewer, openssh-client
 Recommends: devilspie, tightvncserver, openssh-server
 Description: An utility to assist in connecting to a VNC server over SSH tunnel.
  An utility to assist in connecting to a VNC server over SSH tunnel.

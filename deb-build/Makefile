@@ -8,6 +8,8 @@ install:
 	set -x
 	test -d $(DESTDIR)/opt/vnc-picker/ || install --directory --owner=root --group=root --mode=755 --verbose $(DESTDIR)/opt/vnc-picker/
 	install --owner=root --group=root --mode=755 --verbose $(DIR_ORIGIN_SRC)/vnc-picker $(DESTDIR)/opt/vnc-picker/vnc-picker
+	install --owner=root --group=root --mode=755 --verbose $(DIR_ORIGIN_SRC)/print-nodes-confs.py $(DESTDIR)/opt/vnc-picker/print-nodes-confs.py
+	install --owner=root --group=root --mode=644 --verbose $(DIR_ORIGIN_SRC)/vnc-picker.conf $(DESTDIR)/opt/vnc-picker/vnc-picker.conf
 	install --owner=root --group=root --mode=644 --verbose $(DIR_ORIGIN_SRC)/xstartup $(DESTDIR)/opt/vnc-picker/xstartup
 
 	install --directory --owner=root --group=root --mode=755 --verbose $(DESTDIR)/opt/vnc-picker/doc

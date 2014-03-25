@@ -1,3 +1,11 @@
+vnc-picker (2) wheezy; urgency=low
+
+  * Configuration file usage added.
+  * On screen logs verbosity increased.
+  * Bug fixes.
+
+ -- Alex Vesev <alex.vesev@gmail.com>  Mon, 25 Mar 2014 22:40:43 +0400
+
 vnc-picker (1) wheezy; urgency=low
 
   * Initial release.
